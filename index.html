@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HỆ THỐNG THI NHẬN THỨC SỐ - ĐẠI ĐỘI CÔNG BINH 1</title>
+    <style>
+        :root { 
+            --primary-green: #1b3322; 
+            --army-green: #2e4a3e;
+            --accent-gold: #f1c40f; 
+            --border-gold: #cd7f32; 
+            --text-light: #eaeded;
+            --btn-dark: #1a252f;
+            --success: #2ecc71;
+            --danger: #e74c3c;
+        }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background: radial-gradient(circle, var(--army-green) 0%, #112217 100%);
+            color: var(--text-light); 
+            margin: 0; 
+            padding: 10px; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
+            min-height: 98vh;
+        }
+        .container { 
+            background: var(--primary-green); 
+            width: 100%; 
+            max-width: 500px; 
+            border-radius: 16px; 
+            border: 3px solid var(--border-gold); 
+            padding: 25px; 
+            box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+        .container::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
+            background: linear-gradient(to right, var(--accent-gold), var(--border-gold), var(--accent-gold));
+        }
+        .main-header { 
+            text-align: center; 
+            border-bottom: 2px dashed var(--border-gold); 
+            padding-bottom: 15px; 
+            margin-bottom: 20px; 
+        }
+        .main-header h1 { color: var(--accent-gold); margin: 5px 0; font-size: 20px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 1px 1px 3px #000; }
+        .main-header p { margin: 4px 0; font-size: 13px; color: #bdc3c7; font-weight: 500; }
+        
+        .form-box { margin-bottom: 15px; }
+        .form-box label { display: block; font-size: 14px; margin-bottom: 6px; color: var(--accent-gold); font-weight: bold; }
+        .input-field { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #456b56; background: #0b150f; color: #fff; font-size: 15px; box-sizing: border-box; transition: 0.3s; }
+        .input-field:focus { border-color: var(--accent-gold); box-shadow: 0 0 8px rgba(241, 196, 15, 0.3); outline: none; }
+        
+        .action-btn { display: block; width: 100%; background: linear-gradient(135deg, #d35400, #e67e22); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: 0.2s; }
+        .action-btn:hover { filter: brightness(1.1); }
+        .action-btn:active { transform: scale(0.98); }
+
+        .q-text { font-size: 16px; font-weight: bold; line-height: 1.5; margin-bottom: 20px; background: #15281b; padding: 15px; border-radius: 8px; border-left: 5px solid var(--accent-gold); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
+        .opt-btn { display: block; width: 100%; background: var(--btn-dark); color: white; border: 1px solid #2c3e50; padding: 14px; margin: 12px 0; border-radius: 8px; cursor: pointer; text-align: left; font-size: 14px; transition: all 0.2s ease; line-height: 1.4; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+        .opt-btn:hover { background: #253342; border-color: #34495e; }
+        
+        .footer-nav { display: flex; justify-content: space-between; margin-top: 25px; border-top: 1px solid #233f2b; padding-top: 15px; }
+        .nav-control { background: linear-gradient(to bottom, #cd7f32, #b86b20); color: white; border: none; padding: 10px 22px; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+        .nav-control:disabled { background: #7f8c8d; cursor: not-allowed; box-shadow: none; opacity: 0.6; }
+        
+        .result-panel { text-align: center; display: none; }
+        .badge-card { background: #090f0b; border: 2px dashed var(--border-gold); padding: 18px; border-radius: 12px; margin: 20px 0; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .badge-card p { margin: 8px 0; font-size: 15px; border-bottom: 1px solid #15281b; padding-bottom: 5px; }
+        .badge-card span { font-weight: bold; color: var(--accent-gold); }
+        .final-score { font-size: 50px; font-weight: bold; margin: 15px 0; text-align: center; text-shadow: 2px 2px 4px #000; }
+        .rank-lbl { font-size: 22px; font-weight: bold; text-align: center; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="screen-reg">
+        <div class="main-header">
+            <h1>Hệ Thống Kiểm Tra Số</h1>
+            <p>Đại đội Công binh 1 - Bộ CHQS Tỉnh Gia Lai</p>
+        </div>
+        <div class="form-box">
+            <label>Họ và tên đoàn viên, chiến sĩ:</label>
+            <input type="text" id="txt-name" class="input-field" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="off">
+        </div>
+        <div class="form-box">
+            <label>Cấp bậc hiện tại:</label>
+            <select id="sl-rank" class="input-field">
+                <option value="Binh nhì">Binh nhì</option>
+                <option value="Binh nhất">Binh nhất</option>
+                <option value="Hạ sĩ">Hạ sĩ</option>
+                <option value="Trung sĩ">Trung sĩ</option>
+                <option value="Thượng sĩ">Thượng sĩ</option>
+            </select>
+        </div>
+        <div class="form-box">
+            <label>Tiểu đội / Trung đội:</label>
+            <input type="text" id="txt-unit" class="input-field" placeholder="Ví dụ: Tiểu đội 1 - Trung đội 2" autocomplete="off">
+        </div>
+        <button class="action-btn" onclick="startExamination()">Vào làm bài</button>
+    </div>
+
+    <div id="screen-exam" style="display: none;">
+        <div class="main-header">
+            <h1>Bài Thi Nhận Thức</h1>
+            <p id="lbl-user-tag" style="color: var(--accent-gold); font-weight: bold; font-size: 14px;"></p>
+            <p id="lbl-progress" style="font-size: 12px; margin-top: 2px;">Câu hỏi: 1/40</p>
+        </div>
+        <div class="q-text" id="box-q">Đang nạp đề...</div>
+        <div id="box-opts"></div>
+        <div class="footer-nav">
+            <button class="nav-control" id="btn-prev" onclick="moveQuestion(-1)">Quay lại</button>
+            <button class="nav-control" id="btn-next" onclick="moveQuestion(1)">Tiếp theo</button>
+        </div>
+    </div>
+
+    <div id="screen-res" class="result-panel">
+        <div class="main-header">
+            <h1>Kết Quả Kiểm Tra</h1>
+            <p>Chi đoàn Đại đội Công binh 1 chính thức chứng nhận</p>
+        </div>
+        <div class="badge-card">
+            <p>Họ và tên: <span id="out-name">...</span></p>
+            <p>Cấp bậc: <span id="out-rank">...</span></p>
+            <p>Đơn vị: <span id="out-unit">...</span></p>
+            <div class="final-score" id="out-score">0/40</div>
+            <div class="rank-lbl" id="out-rank-lbl">...</div>
+        </div>
+        <p style="font-size: 13px; color: #bdc3c7; font-style: italic; line-height: 1.4;">Đồng chí hãy chụp ảnh lại màn hình kết quả này và gửi vào nhóm Zalo đơn vị để tổ chức ghi nhận điểm thi đua.</p>
+        <button class="nav-control" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="location.reload()">Thi đề khác</button>
+    </div>
+</div>
+
+<script>
+    // NGÂN HÀNG DỮ LIỆU ĐẦY ĐỦ 100% CỦA ĐƠN VỊ CƠ SỞ (0=A, 1=B, 2=C, 3=D)
+    const CORE_BANK = [
+        { q: "Chủ nghĩa Mác ra đời vào khoảng thời gian nào?", options: ["A. Những năm 20 của thế kỷ XIX.", "B. Những năm 30 của thế kỷ XIX.", "C. Những năm 40 của thế kỷ XIX.", "D. Những năm 50 của thế kỷ XIX."], answer: 2 },
+        { q: "Điều kiện chính trị - xã hội quan trọng nhất cho sự ra đời của chủ nghĩa Mác là gì?", options: ["A. Sự phát triển của các công ty độc quyền ở châu Âu.", "B. Sự xuất hiện giai cấp vô sản trên vũ đài lịch sử và cuộc đấu tranh của họ.", "C. Sự sụp đổ của chế độ phong kiến trên toàn thế giới.", "D. Sự hình thành hệ thống thuộc địa của chủ nghĩa thực dân."], answer: 1 },
+        { q: "Nguồn gốc lý luận trực tiếp nhất cấu thành nên chủ nghĩa Mác bao gồm các bộ phận nào?", options: ["A. Triết học cổ điển Đức, Kinh tế chính trị cổ điển Anh, Chủ nghĩa xã hội không tưởng Pháp.", "B. Triết học Hy Lạp cổ đại, Kinh tế học tiểu tư sản Pháp, Chủ nghĩa xã hội Anh.", "C. Phục hưng Italia, Khai sáng Pháp, Cách mạng công nghiệp Anh.", "D. Triết học duy vật Pháp, Kinh tế học chính trị cổ điển Đức, Không tưởng Anh."], answer: 0 },
+        { q: "Ai là người đã bổ sung, phát triển chủ nghĩa Mác vào cuối thế kỷ XIX đầu thế kỷ XX?", options: ["A. C.Mác.", "B. Ph.Ăngghen.", "C. V.I.Lênin.", "D. Tôn Trung Sơn."], answer: 2 },
+        { q: "Chủ nghĩa Mác - Lênin là một học thuyết khoa học và cách mạng vì lý do nào sau đây?", options: ["A. Phản ánh đúng quy luật khách quan vận động của lịch sử và đấu tranh xóa bỏ mọi hình thức nô dịch người.", "B. Được tất cả các quốc gia trên thế giới công nhận và áp dụng đồng loạt.", "C. Không bao giờ cần phải bổ sung hay thay đổi trước thực tiễn.", "D. Chỉ tập trung nghiên cứu quy luật tự nhiên, không liên quan xã hội."], answer: 0 },
+        { q: "Hệ thống chủ nghĩa Mác - Lênin gồm bao nhiêu bộ phận cấu thành thống nhất hữu cơ?", options: ["A. 2 bộ phận.", "B. 3 bộ phận.", "C. 4 bộ phận.", "D. 5 bộ phận."], answer: 1 },
+        { q: "Bộ phận nào trong chủ nghĩa Mác - Lênin là khoa học về những quy luật phổ biến chung nhất của sự vận động, phát triển của tự nhiên, xã hội và tư duy con người?", options: ["A. Triết học Mác - Lênin.", "B. Kinh tế chính trị học Mác - Lênin.", "C. Chủ nghĩa xã hội khoa học.", "D. Tâm lý học quân sự mác-xít."], answer: 0 },
+        { q: "Kinh tế chính trị học Mác - Lênin tập trung nghiên cứu nội dung cốt lõi nào sau đây?", options: ["A. Quy luật vận động phổ biến chung nhất của thế giới vi mô.", "B. Quan hệ giữa người với người trong quá trình sản xuất, trao đổi và tiêu dùng.", "C. Tâm lý và hành vi tiêu dùng của các giai cấp bóc lột.", "D. Các biện pháp kỹ thuật nhằm tăng năng suất lao động trong nhà máy tư bản."], answer: 1 },
+        { q: "Sứ mệnh lịch sử toàn thế giới của giai cấp công nhân theo Chủ nghĩa xã hội khoa học là gì?", options: ["A. Hợp tác lâu dài với giai cấp tư sản để duy trì phương thức sản xuất cũ.", "B. Lật đổ chủ nghĩa tư bản, xây dựng xã hội mới - xã hội chủ nghĩa không còn người áp bức người.", "C. Độc chiếm toàn bộ tư liệu sản xuất để trở thành giai cấp bóc lột mới.", "D. Hủy bỏ hoàn toàn bộ máy nhà nước và không xây dựng hệ thống pháp luật."], answer: 1 },
+        { q: "Mô hình chủ nghĩa xã hội hiện thực ở một số nước trước thời kỳ \"đổi mới, cải cách, cải tổ\" có hạn chế gì được nêu trong tài liệu?", options: ["A. Chạy theo kinh tế thị trường tự do quá mức dẫn đến phân hóa giàu nghèo.", "B. Có những biểu hiện giáo điều, xơ cứng, bảo thủ, chậm đổi mới.", "C. Buông lỏng hoàn toàn sự lãnh đạo của Đảng Cộng sản.", "D. Quá chú trọng vào việc thu hút vốn đầu tư nước ngoài."], answer: 1 },
+        { q: "Đặc trưng nào sau đây của chủ nghĩa xã hội Việt Nam vừa là đặc trưng thứ nhất, vừa là mục tiêu của sự nghiệp xây dựng đất nước?", options: ["A. Có nền văn hóa tiên tiến, đậm đà bản sắc dân tộc.", "B. Dân giàu, nước mạnh, dân chủ, công bằng, văn minh.", "C. Do Nhân dân làm chủ.", "D. Có Nhà nước pháp quyền xã hội chủ nghĩa."], answer: 1 },
+        { q: "Học thuyết nào của Triết học Mác - Lênin chỉ ra rằng lực lượng sản xuất vận động phát triển sẽ mâu thuẫn với quan hệ sản xuất hiện có, làm thay đổi hình thái kinh tế - xã hội cũ?", options: ["A. Học thuyết giá trị thặng dư.", "B. Học thuyết hình thái kinh tế - xã hội.", "C. Học thuyết về sứ mệnh lịch sử của công nhân.", "D. Học thuyết bản chất con người hiện thực."], answer: 1 },
+        { q: "Nguyên nhân của mọi mâu thuẫn trong lòng phương thức sản xuất tư bản chủ nghĩa theo Kinh tế chính trị học Mác - Lênin là gì?", options: ["A. Mâu thuẫn giữa tính xã hội hóa cao của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.", "B. Mâu thuẫn giữa trình độ công nghệ thông tin với phương thức quản lý thủ công.", "C. Mâu thuẫn giữa nhu cầu tiêu dùng của nông dân với năng lực sản xuất của địa chủ.", "D. Mâu thuẫn giữa các công ty độc quyền quốc tế với nhau."], answer: 0 },
+        { q: "Đặc trưng không thể thiếu, phân biệt chủ nghĩa Mác - Lênin với các học thuyết trước đó về thế giới quan và phương pháp luận là gì?", options: ["A. Tách rời thế giới quan khoa học với phương pháp luận biện chứng.", "B. Sự thống nhất hữu cơ giữa thế giới quan khoa học và phương pháp luận mácxít.", "C. Tuyệt đối hóa phương pháp tư duy siêu hình trong mọi lĩnh vực.", "D. Chỉ thừa nhận phép biện chứng tâm linh, phủ nhận thế giới quan duy vật."], answer: 1 },
+        { q: "Bản chất vốn có của chủ nghĩa Mác - Lênin được các nhà sáng lập khẳng định như thế nào?", options: ["A. Là một hệ thống giáo điều khép kín, chân lý tuyệt đích cuối cùng.", "B. Là một hệ thống bất khả xâm phạm, không bao giờ được thay đổi.", "C. Là một học thuyết mở, không ngừng được đổi mới, phát triển trong dòng trí tuệ nhân loại.", "D. Là một lý thuyết chỉ áp dụng riêng cho nước Nga và châu Âu."], answer: 2 },
+        { q: "Theo định nghĩa tại Đại hội XI, Tư tưởng Hồ Chí Minh là kết quả của sự vận dụng và phát triển sáng tạo học thuyết nào vào điều kiện cụ thể của nước ta?", options: ["A. Triết học Khai sáng phương Tây.", "B. Tư tưởng dân chủ tư sản của Tôn Trung Sơn.", "C. Chủ nghĩa Mác - Lênin.", "D. Các lý luận kinh tế học hiện đại."], answer: 2 },
+        { q: "Nguồn gốc lý luận trực tiếp, quyết định bản chất khoa học và cách mạng của tư tưởng Hồ Chí Minh là gì?", options: ["A. Tư tưởng tiến bộ trong Nho giáo và Phật giáo.", "B. Tư tưởng dân chủ, tự do, bình đẳng của cách mạng Pháp.", "C. Chủ nghĩa Mác - Lênin.", "D. Giá trị văn hóa truyền thống dân tộc."], answer: 2 },
+        { q: "Giá trị truyền thống tiêu biểu nào của dân tộc Việt Nam được Hồ Chí Minh kế thừa và phát triển mạnh mẽ nhất?", options: ["A. Chủ nghĩa yêu nước; ý chí tự lực, tự cường; tinh thần đoàn kết.", "B. Tư tưởng quân chủ tập quyền phong kiến.", "C. Lối sống an phận thủ thường, ngại va chạm.", "D. Tư duy kinh tế tiểu nông độc canh."], answer: 0 },
+        { q: "Nhận định nào sau đây đúng về mục tiêu cao nhất của cách mạng theo tư tưởng Hồ Chí Minh?", options: ["A. Giải phóng giai cấp là mục tiêu duy nhất, không cần giải phóng dân tộc.", "B. Giải phóng con người là mục tiêu cao nhất, thúc đẩy cách mạng giải phóng dân tộc và giai cấp.", "C. Giành độc lập dân tộc xong là kết thúc cách mạng, không cần tiến lên chủ nghĩa xã hội.", "D. Tập trung phát triển kinh tế thương mại tự do, phai nhạt lý tưởng chính trị."], answer: 1 },
+        { q: "Câu nói nổi tiếng nào sau đây thể hiện tư tưởng xuyên suốt của Hồ Chủ tịch về quyền dân tộc?", options: ["A. \"Vừa làm vừa nghe ngóng tình hình ngoại cảnh\".", "B. \"Không có gì quý hơn độc lập, tự do\".", "C. \"Học tập để lấy bằng cấp và hoàn thiện hồ sơ\".", "D. \"Dĩ hòa vi quý là nguyên tắc hàng đầu\"."], answer: 1 },
+        { q: "Theo Hồ Chí Minh, độc lập dân tộc phải gắn liền với cái gì thì mới vững bền và mang lại tự do, ấm no thật sự cho Nhân dân?", options: ["A. Chủ nghĩa tư bản hiện đại.", "B. Chế độ phong kiến tập quyền.", "C. Chủ nghĩa xã hội.", "D. Các khối liên minh kinh tế quốc tế."], answer: 2 },
+        { q: "Hồ Chí Minh hiểu chủ nghĩa xã hội ở góc độ thực tiễn, cốt lõi nhất là gì?", options: ["A. Là một hệ thống lý luận trừu tượng, xa rời đời sống hằng ngày.", "B. Làm cho dân có ăn, có mặc, có chỗ ở, có học hành, đời sống ngày càng sung sướng.", "C. Tập trung toàn bộ nguồn lực để xây dựng các nhà máy công nghiệp nặng.", "D. Duy trì chế độ bao cấp vô thời hạn đối với mọi mặt hàng."], answer: 1 },
+        { q: "Sức mạnh thời đại theo tư tưởng Hồ Chí Minh bao gồm những dòng thác cách mạng nào?", options: ["A. Phong trào giải phóng dân tộc; phong trào cách mạng của công nhân; phong trào xã hội chủ nghĩa; phong trào vì hòa bình, dân chủ và tiến bộ xã hội.", "B. Các cuộc chiến tranh giành giật thuộc địa của các nước đế quốc.", "C. Hoạt động đầu tư tài chính của các tập đoàn xuyên quốc gia.", "D. Xu hướng chạy đua vũ trang giữa các cường quốc quân sự."], answer: 0 },
+        { q: "Câu ca nào được Hồ Chí Minh trích dẫn để khẳng định vai trò to lớn, quyết định lịch sử của quần chúng nhân dân?", options: ["A. \"Gốc có vững cây mới bền / Xây lầu thắng lợi trên nền Nhân dân\".", "B. \"Dễ mười lần không dân cũng chịu, khó trăm lần dân liệu cũng xong\".", "C. \"Mình đánh giặc là vì dân / Nhưng mình không phải cứu tinh\".", "D. \"Quân sự mà không có chính trị như cây không có gốc\"."], answer: 1 },
+        { q: "Theo tư tưởng Hồ Chí Minh, Đại đoàn kết dân tộc giữ vị trí như thế nào trong sự nghiệp cách mạng?", options: ["A. Là giải pháp tình thế, chỉ áp dụng khi có chiến tranh ngoại xâm.", "B. Là một chiến lược cơ bản, nhất quán, lâu dài, là vấn đề sống còn quyết định thành công của cách mạng.", "C. Chỉ là khẩu hiệu tuyên truyền đối ngoại, không có vai trò thực chất.", "D. Chỉ tập trung đoàn kết đối với giai cấp công nhân và nông dân."], answer: 1 },
+        { q: "Nội dung nào sau đây thể hiện định nghĩa cốt lõi của Hồ Chí Minh về \"Dân chủ\"?", options: ["A. Dân chủ nghĩa là dân tuân thủ mọi mệnh lệnh áp đặt từ trên xuống.", "B. Dân chủ nghĩa là \"dân là chủ\", bao nhiêu lợi ích đều vì dân, bao nhiêu quyền hạn đều của dân.", "C. Dân chủ là việc khoán trắng mọi quyết định cho cơ quan chức năng.", "D. Dân chủ chỉ áp dụng trong lĩnh vực kinh tế thương mại tư nhân."], answer: 1 },
+        { q: "Nguyên tắc cơ bản nhất trong tổ chức và hoạt động của Nhà nước pháp quyền theo tư tưởng Hồ Chí Minh là gì?", options: ["A. Nguyên tắc phân chia quyền lực tuyệt đối thành các khối đối lập.", "B. Nguyên tắc tập trung dân chủ.", "C. Nguyên tắc hành chính mệnh lệnh một chiều.", "D. Nguyên tắc tự do hành động không cần pháp luật."], answer: 1 },
+        { q: "Quan điểm của Hồ Chí Minh về mối quan hệ giữa con người và vũ khí trong xây dựng lực lượng vũ trang là gì?", options: ["A. Vũ khí là quyết định tuyệt đối, con người chỉ là công cụ phụ trợ.", "B. Con người là quyết định, vũ khí là quan trọng; \"người trước, súng sau\".", "C. Không cần đầu tư vũ khí hiện đại, chỉ cần rèn luyện tinh thần con người.", "D. Chỉ tập trung mua sắm vũ khí công nghệ cao, không cần huấn luyện chính trị."], answer: 1 },
+        { q: "Cách tổ chức lực lượng vũ trang độc đáo, hiệu quả của cách mạng Việt Nam theo tư tưởng Hồ Chí Minh bao gồm những thành phần nào?", options: ["A. Lực lượng vũ trang ba thứ quân: bộ đội chủ lực, bộ đội địa phương và dân quân du kích.", "B. Chỉ bao gồm bộ đội chủ lực chính quy tinh nhuệ.", "C. Toàn bộ là lực lượng dân quân tự vệ bán chuyên trách.", "D. Quân đội đánh thuê kết hợp với tình nguyện viên quốc tế."], answer: 0 },
+        { q: "Định nghĩa rộng của Hồ Chí Minh về \"Văn hóa\" xác định văn hóa được sáng tạo ra nhằm mục đích gì?", options: ["A. Nhằm phục vụ nhu cầu giải trí riêng biệt của giai cấp thống trị.", "B. Nhằm thích ứng nhu cầu đời sống và đòi hỏi của sự sinh tồn của loài người.", "C. Chỉ bao gồm chữ viết và các tác phẩm nghệ thuật hàn lâm.", "D. Nhằm mục đích đối ngoại chính trị với các nước lân bang."], answer: 1 },
+        { q: "Khẳng định nào sau đây của Hồ Chí Minh nói về tầm quan trọng đặc biệt của Đạo đức cách mạng đối với người cách mạng?", options: ["A. Người cách mạng có tài giỏi thì không cần có đạo đức vẫn lãnh đạo được Nhân dân.", "B. Người cách mạng phải có đạo đức, không có đạo đức thì dù tài giỏi mấy cũng không lãnh đạo được Nhân dân.", "C. Đạo đức cách mạng là đạo đức thủ cựu, kế thừa nguyên vẹn lối sống cũ.", "D. Đạo đức cách mạng chỉ cần thiết cho thế hệ trẻ, cán bộ cao cấp không cần rèn luyện."], answer: 1 },
+        { q: "Vận mệnh của quốc gia, dân tộc thịnh hay suy, yếu hay mạnh theo Hồ Chí Minh phụ thuộc một phần lớn vào đối tượng nào?", options: ["A. Sự viện trợ kinh tế của các nước giàu.", "B. Thanh niên - người chủ tương lai của nước nhà.", "C. Số lượng vũ khí trang bị nhập khẩu hằng năm.", "D. Các doanh nhân và thương gia nước ngoài."], answer: 1 },
+        { q: "Bản chất của Đảng Cộng sản Việt Nam theo tư tưởng Hồ Chí Minh là gì?", options: ["A. Đảng không phải là \"quan nhân dân\", mà là \"công bộc\", \"đầy tớ thật trung thành của Nhân dân\".", "B. Đảng là tổ chức đứng trên pháp luật, không chịu sự giám sát của nhân dân.", "C. Đảng giữ vai trò quản lý hành chính thay thế hoàn toàn cho các cơ quan Nhà nước.", "D. Đảng là một câu lạc bộ thảo luận lý luận trừu tượng."], answer: 0 },
+        { q: "Lợi ích cốt lõi duy nhất của Đảng Cộng sản Việt Nam được Bác Hồ và Đảng ta khẳng định là gì?", options: ["A. Tìm kiếm lợi ích vật chất riêng cho đội ngũ cán bộ, đảng viên.", "B. Ngoài lợi ích của giai cấp, dân tộc và Nhân dân, Đảng không có lợi ích nào khác.", "C. Độc chiếm vị trí để phân chia bổng lộc và địa vị chính trị.", "D. Bảo vệ quyền lợi ích cho các doanh nghiệp tư bản nước ngoài."], answer: 1 },
+        { q: "Theo tài liệu nhận diện về chủ nghĩa tư bản hiện đại, bản chất mâu thuẫn vốn có nào của chủ nghĩa tư bản không thể giải quyết được và ngày càng trở nên sâu sắc?", options: ["A. Mâu thuẫn giữa trình độ khoa học công nghệ với năng lực quản trị doanh nghiệp.", "B. Mâu thuẫn giữa tính chất xã hội hóa ngày càng cao của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa.", "C. Mâu thuẫn giữa xu hướng đô thị hóa với bảo tồn thiên nhiên hoang dã.", "D. Mâu thuẫn giữa năng lượng hóa thạch và năng lượng tái tạo."], answer: 1 },
+        { q: "Trong Cương lĩnh đầu tiên được thông qua vào ngày 03-02-1930, Đảng ta đã chủ trương con đường phát triển cách mạng như thế nào?", options: ["A. Tiến hành cách mạng tư sản, xây dựng chế độ tư bản chủ nghĩa phát triển cao rồi mới tính tiếp.", "B. Tiến hành cách mạng dân tộc dân chủ nhân dân, tiến lên chủ nghĩa xã hội, bỏ qua chế độ tư bản chủ nghĩa.", "C. Duy trì chế độ phong kiến lỗi thời kết hợp với kinh tế thị trường tự do.", "D. Tiến thẳng lên xã hội cộng sản chủ nghĩa ngay lập tức mà không cần qua giai đoạn quá độ."], answer: 1 },
+        { q: "Sự thất bại của các phong trào yêu nước chống Pháp theo khuynh hướng phong kiến và tư sản cuối thế kỷ XIX đầu thế kỷ XX chứng tỏ điều gì?", options: ["A. Người dân Việt Nam không có tinh thần yêu nước và ý chí đấu tranh.", "B. Thực dân Pháp có sức mạnh tuyệt đối, không thể bị đánh bại.", "C. Việt Nam lâm vào khủng hoảng, bế tắc về đường lối cứu nước và giai cấp lãnh đạo cách mạng.", "D. Do không nhận được sự viện trợ vũ khí từ nước Anh và nước Mỹ."], answer: 2 },
+        { q: "Vào ngày 05-6-1911, người thanh niên yêu nước Nguyễn Tất Thành đã ra đi tìm đường cứu nước từ địa điểm nào?", options: ["A. Bến cảng Hải Phòng.", "B. Bến cảng Nhà Rồng (Sài Gòn).", "C. Cửa biển Đà Nẵng.", "D. Cảng Quy Nhơn."], answer: 1 },
+        { q: "Sự kiện nào đánh dấu bước chuyển biến quyết định trong tư tưởng và lập trường chính trị của Nguyễn Ái Quốc từ chủ nghĩa yêu nước sang chủ nghĩa cộng sản?", options: ["A. Gửi Bản yêu sách tám điểm tới Hội nghị Vécxây (tháng 6-1919).", "B. Đọc bản Sơ thảo Luận cương về vấn đề dân tộc và thuộc địa của Lênin (tháng 7-1920).", "C. Bỏ phiếu tán thành gia nhập Quốc tế thứ ba và tham gia sáng lập Đảng Cộng sản Pháp (tháng 12-1920).", "D. Thành lập Hội Việt Nam cách mạng thanh niên tại Quảng Châu (tháng 6-1925)."], answer: 2 },
+        { q: "Ba tổ chức cộng sản ra đời ở ba miền nước ta vào năm 1929 bao gồm những tổ chức nào?", options: ["A. Đông Dương Cộng sản Đảng, An Nam Cộng sản Đảng, Đông Dương Cộng sản liên đoàn.", "B. Việt Nam Quốc dân Đảng, Tâm Tâm xã, Hội Phục Việt.", "C. Đảng Lao động Việt Nam, Xô viết Nghệ Tĩnh, Mặt trận Việt Minh.", "D. Cộng sản Đoàn, Nhóm châu Á, Hội liên hiệp thuộc địa."], answer: 0 },
+        { q: "Hội nghị hợp nhất các tổ chức cộng sản thành lập Đảng Cộng sản Việt Nam diễn ra từ ngày 06-01 đến ngày 07-02-1930 tại địa điểm nào?", options: ["A. Quảng Châu (Trung Quốc).", "B. Bán đảo Cửu Long (Hương Cảng, Trung Quốc).", "C. Cao Bằng (Việt Nam).", "D. Paris (Pháp)."], answer: 1 },
+        { q: "Đàg Cộng sản Việt Nam ra đời là sản phẩm của sự kết hợp giữa ba yếu tố nào?", options: ["A. Triết học Đức, Kinh tế Anh, Không tưởng Pháp.", "B. Chủ nghĩa Mác - Lênin, phong trào công nhân và phong trào yêu nước Việt Nam.", "C. Tinh thần Cần Vương, Nho giáo tiến bộ và tư tưởng tư sản.", "D. Khát vọng của nhân dân, vũ khí hiện đại và nguồn tài chính quốc tế."], answer: 1 },
+        { q: "Qua 15 năm (1930 - 1945) lãnh đạo cách mạng, ba cao trào cách mạng lớn do Đảng tổ chức tạo tiền đề cho thắng lợi của Cách mạng tháng Tám là gì?", options: ["A. Cao trào 1930-1931; Cao trào dân sinh dân chủ 1936-1939; Cao trào giải phóng dân tộc 1939-1945.", "B. Khởi nghĩa Yên Bái; Khởi nghĩa Nam Kỳ; Binh biến Đô Lương.", "C. Phong trào Đông Du; Phong trào Duy Tân; Phong trào Cần Vương.", "D. Chiến dịch Biên giới; Chiến dịch Tây Bắc; Chiến dịch Điện Biên Phủ."], answer: 0 },
+        { q: "Nước Việt Nam Dân chủ Cộng hòa - Nhà nước của Nhân dân, do Nhân dân và vì Nhân dân chính thức được khai sinh vào ngày tháng năm nào?", options: ["A. Ngày 03 tháng 02 năm 1930.", "B. Ngày 19 tháng 08 năm 1945.", "C. Ngày 02 tháng 09 năm 1945.", "D. Ngày 19 tháng 12 năm 1946."], answer: 2 },
+        { q: "Sau Cách mạng tháng Tám năm 1945, vận mệnh nước ta đứng trước những khó khăn nghiêm trọng nào đe dọa trực tiếp, được ví như \"ngàn cân treo sợi tóc\"?", options: ["A. Nền kinh tế kiệt quệ, nạn đói đe dọa, hơn 90% dân số mù chữ, ngoại xâm và nội phản chống phá.", "B. Sự khủng hoảng của hệ thống xã hội chủ nghĩa trên thế giới.", "C. Lạm phát phi mã và tỷ lệ thất nghiệp của công nhân công nghệ cao.", "D. Sự bất đồng về đường lối đối ngoại giữa các nước lân bang."], answer: 0 },
+        { q: "Trong giai đoạn 1945 - 1946, Đảng đã thực hiện sách lược hòa hoãn với quân đội Trung Hoa Dân quốc ở miền Bắc nhằm mục đích gì?", options: ["A. Để chuẩn bị lực lượng ký kết hiệp ước liên minh quân sự với họ.", "B. Để tập trung lực lượng kháng chiến chống thực dân Pháp xâm lược ở Nam Bộ.", "C. Để nhường toàn bộ quyền bính quản lý hành chính quốc gia cho họ.", "D. Để nhờ họ đào tạo đội ngũ cán bộ sĩ quan cao cấp cho quân đội ta."], answer: 1 },
+        { q: "Lời kêu gọi toàn quốc kháng chiến được Chủ tịch Hồ Chí Minh ra văn bản phát động vào ngày tháng năm nào?", options: ["A. Ngày 02 tháng 09 năm 1945.", "B. Ngày 06 tháng 03 năm 1946.", "C. Ngày 19 tháng 12 năm 1946.", "D. Ngày 07 tháng 05 năm 1954."], answer: 2 },
+        { q: "Chiến thắng Điện Biên Phủ lẫy lừng năm 1954 đã báo hiệu sự sụp đổ hoàn toàn không tránh khỏi của hình thái chủ nghĩa thực dân nào?", options: ["A. Chủ nghĩa thực dân kiểu mới.", "B. Chủ nghĩa thực dân cũ.", "C. Chủ nghĩa đế quốc độc quyền tư bản.", "D. Chủ nghĩa độc tài phát-xít."], answer: 1 },
+        { q: "Đặc điểm lớn nhất, nét độc đáo của cách mạng Việt Nam thời kỳ 1954 - 1975 dưới sự lãnh đạo thống nhất của Đảng là gì?", options: ["A. Tập trung toàn bộ lực lượng để xây dựng kinh tế, không tiến hành đấu tranh vũ trang.", "B. Tiến hành đồng thời hai nhiệm vụ chiến lược: cách mạng XHCN ở miền Bắc và cách mạng dân tộc dân chủ nhân dân ở miền Nam.", "C. Dựa hoàn toàn vào việc đưa quân đội tình nguyện nước ngoài vào giải phóng miền Nam.", "D. Sáp nhập cơ quan quân sự hai miền thành một đầu mối ngay từ năm 1954."], answer: 1 },
+        { q: "Sự kiện lịch sử nào đã kết thúc vẻ vang 30 năm chiến tranh giải phóng dân tộc, bảo vệ Tổ quốc, mở ra thời kỳ độc lập, thống nhất, cả nước đi lên chủ nghĩa xã hội?", options: ["A. Cao trào Đồng Khởi năm 1960.", "B. Cuộc Tổng tiến công và nổi dậy Tết Mậu Thân 1968.", "C. Cuộc Tổng tiến công và nổi dậy mùa Xuân 1975, đỉnh cao là Chiến dịch Hồ Chí Minh lịch sử.", "D. Việc ký kết Hiệp định Giơ-ne-vơ năm 1954."], answer: 2 },
+        { q: "Đại hội đại biểu toàn quốc lần thứ IV của Đảng (tháng 12-1976) đã có quyết định quan trọng nào liên quan đến tên gọi của Đảng?", options: ["A. Đổi tên Đông Dương Cộng sản Đảng thành Đảng Lao động Việt Nam.", "B. Đổi tên Đảng Lao động Việt Nam thành Đảng Cộng sản Việt Nam.", "C. Đổi tên Đảng Cộng sản Việt Nam thành Đảng Cách mạng Việt Nam.", "D. Giữ nguyên tên gọi Hội Việt Nam cách mạng thanh niên."], answer: 1 },
+        { q: "Tình trạng khủng hoảng kinh tế - xã hội trầm trọng của nước ta trong giai đoạn 1975 - 1986 có biểu hiện nào sau đây?", options: ["A. Kinh tế phát triển quá nóng, phân phối lưu thông ổn định tuyệt đối.", "B. Nền kinh tế mất cân đối nghiêm trọng, phân phối lưu thông rối ren, lạm phát \"phi mã\", đời sống nhân dân khó khăn.", "C. Tỷ lệ mù chữ tăng cao lên mốc 90% như thời kỳ trước cách mạng.", "D. Sự thâm hụt ngân sách do chi tiêu quá lớn vào công nghệ số."], answer: 1 },
+        { q: "Đường lối đổi mới toàn diện về kinh tế, chính trị, văn hóa, xã hội và đối ngoại của Đảng chính thức được đề ra tại Đại hội lần thứ mấy?", options: ["A. Đại hội đại biểu toàn quốc lần thứ IV (1976).", "B. Đại hội đại biểu toàn quốc lần thứ V (1982).", "C. Đại hội đại biểu toàn quốc lần thứ VI (tháng 12-1986).", "D. Đại hội đại biểu toàn quốc lần thứ VII (1991)."], answer: 2 },
+        { q: "Đại hội VI xác định để nâng cao năng lực lãnh đạo, Đảng phải đi đầu đổi mới về nội dung nào trước tiên?", options: ["A. Đổi mới trang bị vũ khí kỹ thuật cho quân đội.", "B. Đổi mới tư duy, trước hết là tư duy kinh tế; đổi mới tổ chức, cán bộ và phong cách lãnh đạo.", "C. Đổi mới cấu trúc hành chính cấp xã phường trên toàn quốc.", "D. Thay đổi hoàn toàn mục tiêu tiến lên chủ nghĩa xã hội."], answer: 1 },
+        { q: "Văn kiện chiến lược quan trọng mang tính nền tảng lý luận được thông qua tại Đại hội đại biểu toàn quốc lần thứ VII (1991) là văn kiện nào?", options: ["A. Cương lĩnh đầu tiên của Đảng năm 1930.", "B. Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (Cương lĩnh năm 1991).", "C. Luận cương chính trị của Trần Phú.", "D. Chỉ thị toàn dân kháng chiến của Ban Thường vụ Trung ương."], answer: 1 },
+        { q: "Đại hội lần thứ mấy của Đảng quyết định chuyển đất nước sang thời kỳ mới: thời kỳ đẩy mạnh công nghiệp hóa, hiện đại hóa đất nước?", options: ["A. Đại hội đại biểu toàn quốc lần thứ VI (1986).", "B. Đại hội đại biểu toàn quốc lần thứ VII (1991).", "C. Đại hội đại biểu toàn quốc lần thứ VIII (1996).", "D. Đại hội đại biểu toàn quốc lần thứ IX (2001)."], answer: 2 },
+        { q: "Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (bổ sung, phát triển năm 2011) được thông qua tại Đại hội lần thứ mấy?", options: ["A. Đại hội đại biểu toàn quốc lần thứ X (2006).", "B. Đại hội đại biểu toàn quốc lần thứ XI (2011).", "C. Đại hội đại biểu toàn quốc lần thứ XII (2016).", "D. Đại hội đại biểu toàn quốc lần thứ XIII (2021)."], answer: 1 },
+        { q: "Điền từ còn thiếu vào bài học kinh nghiệm chủ yếu của Đảng: “Toàn bộ hoạt động của Đảng phải xuất phát từ lợi ích và nguyện vọng chính đáng của Nhân dân. Sức mạnh của Đảng là ở sự gắn bó mật thiết với Nhân dân. Quan liêu, tham nhũng, xa rời Nhân dân sẽ dẫn đến những ....... khôn lường đối với vận mệnh của đất nước, của chế độ và của Đảng”?", options: ["A. Khó khăn.", "B. Tổn thất.", "C. Thay đổi.", "D. Biến động."], answer: 1 },
+        { q: "Việc giữ gìn sự đoàn kết nhất trí của Đảng được Chủ tịch Hồ Chí Minh căn dặn trong Di chúc phải ví như giữ gìn bộ phận nào của cơ thể?", options: ["A. Giữ gìn như đôi bàn tay của mình.", "B. Giữ gìn như con ngươi của mắt mình.", "C. Giữ gìn như trái tim của mình.", "D. Giữ gìn như khối óc của mình."], answer: 1 },
+        { q: "Trong công cuộc đổi mới, để kết hợp đúng đắn nội lực với ngoại lực, Đảng và Nhà nước đã thực hiện phương châm đối ngoại như thế nào?", options: ["A. Đóng cửa nền kinh tế, tuyệt đối không tiếp nhận vốn đầu tư nước ngoài.", "B. Tranh thủ có hiệu quả vốn đầu tư nước ngoài, đẩy mạnh hợp tác và hội nhập quốc tế trên cơ sở khơi dậy tiềm năng trong nước.", "C. Phụ thuộc hoàn toàn vào nguồn chi viện tài chính và công nghệ của các nước lớn.", "D. Chỉ mở rộng quan hệ đối ngoại với các nước trong khối thuộc địa cũ."], answer: 1 },
+        { q: "Hệ thống chính trị được định nghĩa là một chỉnh thể các tổ chức chính trị hợp pháp bao gồm những thành tố cốt lõi nào?", options: ["A. Các công ty đa quốc gia, nghiệp đoàn độc lập và hội từ thiện xã hội.", "B. Các Đảng chính trị, Nhà nước và các tổ chức chính trị - xã hội liên kết với nhau nhằm thực thi quyền lực chính trị.", "C. Các cơ quan tư pháp hành chính và các tập đoàn kinh tế thương mại tự do.", "D. Đội ngũ trí thức, các trường đại học và viện nghiên cứu khoa học."], answer: 1 },
+        { q: "Quyền lực của Nhà nước Cộng hòa xã hội chủ nghĩa Việt Nam có nguồn gốc cốt lõi từ đâu?", options: ["A. Từ hiến pháp của các nước phát triển phương Tây chuyển giao.", "B. Nguồn gốc quyền lực nhà nước có nguồn gốc từ Nhân dân.", "C. Từ tiềm lực kinh tế tài chính của tầng lớp doanh nhân giàu có.", "D. Do cơ quan thường trực cấp trung ương tự quyết định định ra."], answer: 1 },
+        { q: "Thuật ngữ “hệ thống chính trị” được chính thức sử dụng ở Việt Nam thay thế cho thuật ngữ “hệ thống chuyên chính vô sản” từ Hội nghị lần thứ sáu Ban Chấp hành Trung ương Đảng khóa mấy?", options: ["A. Ban Chấp hành Trung ương Đảng khóa IV (1977).", "B. Ban Chấp hành Trung ương Đảng khóa V (1983).", "C. Ban Chấp hành Trung ương Đảng khóa VI (1989).", "D. Ban Chấp hành Trung ương Đảng khóa VII (1992)."], answer: 2 },
+        { q: "Trong hệ thống chính trị Việt Nam hiện nay, tổ chức nào giữ vai trò là hạt nhân lãnh đạo Nhà nước và xã hội?", options: ["A. Nhà nước Cộng hòa xã hội chủ nghĩa Việt Nam.", "B. Mặt trận Tổ quốc Việt Nam.", "C. Đảng Cộng sản Việt Nam.", "D. Đoàn Thanh niên Cộng sản Hồ Chí Minh."], answer: 2 },
+        { q: "Cơ quan nào là cơ quan đại biểu cao nhất của Nhân dân, cơ quan quyền lực nhà nước cao nhất của nước Cộng hòa xã hội chủ nghĩa Việt Nam, thực hiện quyền lập hiến và lập pháp?", options: ["A. Quốc hội.", "B. Chính phủ.", "C. Tòa án nhân dân tối cao.", "D. Ban Chấp hành Trung ương Đảng."], answer: 0 },
+        { q: "Chính phủ giữ vị trí, chức năng gì trong bộ máy Nhà nước Cộng hòa xã hội chủ nghĩa Việt Nam?", options: ["A. Là cơ quan đại biểu cao nhất của Nhân dân, thực hiện quyền lập pháp.", "B. Là cơ quan hành chính Nhà nước cao nhất, thực hiện quyền hành pháp, là cơ quan chấp hành của Quốc hội.", "C. Là cơ quan độc lập xét xử, thực hiện quyền tư pháp tối cao.", "D. Là cơ quan kiểm sát toàn bộ hoạt động tư pháp của lực lượng vũ trang."], answer: 1 },
+        { q: "Hội đồng nhân dân là cơ quan như thế nào ở địa phương?", options: ["A. Là cơ quan chấp hành hành chính nhà nước do Ủy ban nhân dân cấp trên bổ nhiệm.", "B. Là cơ quan quyền lực nhà nước ở địa phương, đại diện cho ý chí, nguyện vọng và quyền làm chủ của Nhân dân, do Nhân dân địa phương bầu ra.", "C. Là tổ chức đoàn thể tự nguyện của các cựu chiến binh và nông dân địa phương.", "D. Là cơ quan xét xử độc lập thuộc hệ thống tòa án nhân dân khu vực."], answer: 1 },
+        { q: "Mặt trận Tổ quốc Việt Nam được thành lập vào ngày tháng năm nào, do ai sáng lập và lãnh đạo?", options: ["A. Ngày 03/02/1930, do Trần Phú sáng lập.", "B. Ngày 19/08/1945, do Nguyễn Thái Học lãnh đạo.", "C. Ngày 18/11/1930, do Đảng Cộng sản Việt Nam và Chủ tịch Hồ Chí Minh sáng lập.", "D. Ngày 22/12/1944, do Võ Nguyên Giáp thành lập."], answer: 2 },
+        { q: "Tổ chức chính trị - xã hội nào của giai cấp công nhân và của người lao động được thành lập trên cơ sở tự nguyện, đại diện chăm lo và bảo vệ quyền, lợi ích hợp pháp của người lao động?", options: ["A. Hội Nông dân Việt Nam.", "B. Công đoàn Việt Nam.", "C. Hội Liên hiệp Phụ nữ Việt Nam.", "D. Hội Cựu chiến binh Việt Nam."], answer: 1 },
+        { q: "Đoàn Thanh niên Cộng sản Hồ Chí Minh phối hợp với các cơ quan nhà nước và đoàn thể nhằm mục đích gì đối với thanh thiếu nhi?", options: ["A. Tổ chức tuyển dụng lao động thời vụ hằng năm.", "B. Chăm lo giáo dục, đào tạo và bảo vệ thanh thiếu nhi; tổ chức cho đoàn viên tham gia quản lý nhà nước và xã hội.", "C. Thay thế hoàn toàn nhà trường trong việc giảng dạy văn hóa phổ thông.", "D. Thu đóng tiền ngân sách bắt buộc đối với mọi công dân dưới 18 tuổi."], answer: 1 },
+        { q: "Cơ chế vận hành chủ đạo, xuyên suốt của hệ thống chính trị Việt Nam là gì?", options: ["A. Quốc hội lãnh đạo, Chính phủ điều hành, Tòa án giám sát.", "B. Đảng lãnh đạo, Nhà nước quản lý, Nhân dân làm chủ.", "C. Mặt trận Tổ quốc quyết định, các tổ chức thành viên thực hiện nghiêm túc.", "D. Cấp trên ra mệnh lệnh hành chính, cấp dưới tuyệt đối chấp hành."], answer: 1 },
+        { q: "Đặc điểm hàng đầu, nổi bật nhất của hệ thống chính trị Việt Nam là gì?", options: ["A. Tồn tại nhiều đảng chính trị đối lập cùng tham gia tranh cử ghế nghị viện.", "B. Do duy nhất một Đảng Cộng sản lãnh đạo, không tồn tại các đảng chính trị đối lập.", "C. Khoán trắng mọi quyền bính cho hệ thống các tập đoàn kinh tế tư nhân.", "D. Được tổ chức theo mô hình liên bang tự trị giữa các vùng miền."], answer: 1 },
+        { q: "Nội dung phương thức lãnh đạo của Đảng đối với hệ thống chính trị bằng Cương lĩnh, chiến lược được thể hiện thông qua văn bản nào?", options: ["A. Các bản sắc lệnh hành chính khẩn cấp của Thủ tướng chính phủ.", "B. Cương lĩnh, văn kiện, các nghị quyết của Đảng, sau đó Nhà nước thể chế hóa thành Hiến pháp và pháp luật.", "C. Các bài viết tự do của đảng viên đăng tải trên mạng xã hội cá nhân.", "D. Quy chế hoạt động nội bộ của các doanh nghiệp thương mại tư nhân."], answer: 1 },
+        { q: "Bản chất mâu thuẫn chồng chéo, cồng kềnh của bộ máy hệ thống chính trị hiện nay đang đặt ra yêu cầu cấp thiết phải thực hiện giải pháp gì?", options: ["A. Chia nhỏ thêm nhiều tầng nấc hành chính trung gian để quản lý chặt chẽ hơn.", "B. Sắp xếp lại tổ chức bộ máy hệ thống chính trị tinh gọn, hoạt động hiệu lực, hiệu quả.", "C. Tăng biên chế hành chính vô điều kiện tại tất cả các đầu mối sở ngành.", "D. Bãi bỏ hoàn toàn các cơ quan kiểm tra giám sát tư pháp của Đảng."], answer: 1 },
+        { q: "Sự lãnh đạo của Đảng trên lĩnh vực xây dựng các tổ chức chính trị - xã hội tuân thủ nguyên tắc chỉ đạo nào để phát huy tính sáng tạo của họ?", options: ["A. Can thiệp trực tiếp vào từng công việc tổ chức, điều hành cụ thể hằng ngày của họ.", "B. Đề ra quan điểm, nguyên tắc tư tưởng chỉ đạo, đề cao tính tự chủ, chủ động của các tổ chức, không can thiệp việc tổ chức cụ thể.", "C. Khoán trắng hoàn toàn, không cần định hướng chính trị hay kiểm tra giám sát.", "D. Bắt buộc các tổ chức này phải tự sáp nhập vào bộ máy hành chính nhà nước."], answer: 1 },
+        { q: "Khi đi tìm con đường giải phóng dân tộc, sự kiện năm 1921 tại Paris thể hiện việc Nguyễn Ái Quốc tập hợp lực lượng cách mạng thuộc địa thông qua tổ chức nào?", options: ["A. Tâm Tâm xã.", "B. Hội Liên hiệp các dân tộc thuộc địa.", "C. Việt Nam Quốc dân Đảng.", "D. Hội Phục Việt."], answer: 1 },
+        { q: "\"Luận cương về thanh niên thuộc địa\" do Nguyễn Ái Quốc chủ trì soạn thảo và trình bày tại sự kiện nào vào tháng 7/1924 tại Matxcơva?", options: ["A. Đại hội Quốc tế Cộng sản lần thứ V.", "B. Đại hội Quốc tế thanh niên cộng sản lần thứ IV.", "C. Hội nghị hợp nhất thành lập Đảng Cộng sản Việt Nam.", "D. Đại hội lần thứ XVIII Đảng Xã hội Pháp."], answer: 1 },
+        { q: "Nhóm thiếu nhi bí mật gồm 08 em được Nguyễn Ái Quốc bí mật tuyển chọn đưa sang Quảng Châu đào tạo, huấn luyện là những đoàn viên thanh niên cộng sản đầu tiên của nước ta, trong đó người đoàn viên tiêu biểu nhất là ai?", options: ["A. Lê Hồng Phong.", "B. Trần Phú.", "C. Lê Hữu Trọng (Bí danh: Lý Tự Trọng).", "D. Võ Nguyên Giáp."], answer: 2 },
+        { q: "Văn kiện nền tảng về lý luận vận động thanh niên đầu tiên của Đảng được thông qua tại Hội nghị Ban Chấp hành Trung ương Đảng lần thứ nhất (tháng 10/1930) có tên gọi là gì?", options: ["A. Chánh cương vắn tắt của Đảng.", "B. Án nghị quyết về Cộng sản thanh niên vận động.", "C. Chỉ thị toàn dân kháng chiến.", "D. Sách lược vắn tắt của Đảng."], answer: 1 },
+        { q: "Hội nghị Ban Chấp hành Trung ương lần thứ hai diễn ra vào tháng 3/1931 tại Sài Gòn do ai chủ trì đã quyết định nhiệm vụ cần kíp phải nhanh chóng tổ chức ra Cộng sản thanh niên Đoàn?", options: ["A. Nguyễn Ái Quốc.", "B. Tổng Bí thư Trần Phú.", "C. Lê Hồng Phong.", "D. Hà Huy Tập."], answer: 1 },
+        { q: "Đại hội Đại biểu toàn quốc lần thứ III của Đoàn (tháng 3/1961) đã quyết định lấy ngày tháng năm nào làm ngày kỷ niệm thành lập Đoàn hằng năm?", options: ["A. Ngày 03 tháng 02 năm 1930.", "B. Ngày 26 tháng 03 năm 1931.", "C. Ngày 19 tháng 08 năm 1945.", "D. Ngày 22 tháng 12 năm 1944."], answer: 1 },
+        { q: "Tên gọi \"Đoàn Thanh niên Cứu quốc Việt Nam\" được sử dụng trong giai đoạn lịch sử nào của đất nước?", options: ["A. Từ 1931 - 1936.", "B. Từ 1936 - 1939.", "C. Từ 1939 - 1941.", "D. Từ 1941 - 1956."], answer: 3 },
+        { q: "Tên gọi hiện nay \"Đoàn Thanh niên Cộng sản Hồ Chí Minh\" chính thức được sử dụng từ mốc lịch sử nào đến nay?", options: ["A. Từ năm 1956.", "B. Từ năm 1970.", "C. Từ năm 1976.", "D. Từ năm 1986."], answer: 2 },
+        { q: "Đại Đại từ, Thái Nguyên (tháng 2/1950) với sự tham gia của hơn 400 đại biểu là kỳ Đại hội đại biểu toàn quốc lần thứ mấy của Đoàn?", options: ["A. Đại hội lần thứ I.", "B. Đại hội lần thứ II.", "C. Đại hội lần thứ III.", "D. Đại hội lần thứ IV."], answer: 0 },
+        { q: "Phong tào thi đua hành động cách mạng nổi tiếng \"Ba sẵn sàng\" của thanh niên miền Bắc và \"Năm xung phong\" của thanh niên miền Nam được phát động mạnh mẽ trong nhiệm kỳ Đại hội nào của Đoàn?", options: ["A. Đại hội lần thứ II.", "B. Đại hội lần thứ III.", "C. Đại hội lần thứ IV.", "D. Đại hội lần thứ V."], answer: 1 },
+        { q: "Hai phong trào hành động lớn \"Thanh niên lập nghiệp\" và \"Tuổi trẻ giữ nước\" chính thức được Đoàn phát động vào thời gian nào (tháng 2/1993)?", options: ["A. Trong nhiệm kỳ Đại hội IV.", "B. Trong nhiệm kỳ Đại hội V.", "C. Trong nhiệm kỳ Đại hội VI.", "D. Trong nhiệm kỳ Đại hội VII."], answer: 2 },
+        { q: "Ba phong trào hành động cách mạng được triển khai đồng bộ toàn Đoàn trong giai đoạn hiện nay (từ Đại hội XI) bao gồm những phong trào nào?", options: ["A. Thanh niên tình nguyện, Tuổi trẻ sáng tạo, Tuổi trẻ xung kích bảo vệ Tổ quốc.", "B. Ba sẵn sàng, Năm xung phong, Quyết thắng quân sự.", "C. Thanh niên lập nghiệp, Tuổi trẻ giữ nước, Đền ơn đáp nghĩa.", "D. Cải cách hành chính, Hội nhập quốc tế, Lao động rèn luyện tay nghề."], answer: 0 },
+        { q: "Nội dung thuộc tính vị trí của Đoàn đối với Đảng Cộng sản Việt Nam được khẳng định như thế nào trong Điều lệ?", options: ["A. Đoàn là tổ chức độc lập tuyệt đối, không chịu sự định hướng chính trị của Đảng.", "B. Đoàn là đội dự bị tin cậy của Đảng, đội quân xung kích cách mạng phấn đấu vì mục tiêu lý tưởng của Đảng.", "C. Đoàn giữ vai trò lãnh đạo, chỉ đạo tối cao đối với các cấp ủy Đảng cơ sở.", "D. Đoàn là cơ quan chấp hành hành chính thuộc bộ máy quản lý nhà nước."], answer: 1 },
+        { q: "Điền cụm từ còn thiếu vào mối quan hệ gắn bó hữu cơ giữa công tác Đảng và công tác Đoàn: “Xây dựng Đoàn vững mạnh là nội dung quan trọng trong công tác xây dựng Đảng, là .......”?", options: ["A. Nhiệm vụ của cơ quan quân sự địa phương.", "B. Xây dựng Đảng trước một bước.", "C. Giải pháp tình thế khi thiếu hụt cán bộ.", "D. Mục tiêu duy nhất của phong trào thanh niên."], answer: 1 },
+        { q: "Đối với tổ chức Đội Thiếu niên Tiền phong Hồ Chí Minh, Đoàn Thanh niên giữ vai trò, trách nhiệm gì?", options: ["A. Là cơ quan quản lý tài chính kinh tế độc quyền của Đội.", "B. Là người phụ trách, chăm sóc, giáo dục và bảo vệ thiếu niên nhi đồng.", "C. Cung cấp trang thiết bị vũ khí quân sự cho học sinh tiểu học.", "D. Phối hợp tuyển chọn gọi đội viên nhập ngũ nghĩa vụ quân sự."], answer: 1 },
+        { q: "Nguyên tắc tổ chức và hoạt động cốt lõi của Đoàn Thanh niên Cộng sản Hồ Chí Minh được quy định trong Điều lệ là gì?", options: ["A. Nguyên tắc hiệp thương dân chủ tự nguyện không cần biểu quyết.", "B. Nguyên tắc tập trung dân chủ.", "C. Nguyên tắc độc đoán chuyên quyền của người đứng đầu.", "D. Nguyên tắc phân cấp quản lý tự trị tuyệt đối cho cấp cơ sở."], answer: 1 },
+        { q: "Quyết định của đại hội, hội nghị các cấp của Đoàn chỉ có giá trị pháp lý khi có ít nhất bao nhiêu thành viên được triệu tập tham dự?", options: ["A. Có ít nhất một phần hai (1/2) số thành viên tham dự.", "B. Có ít nhất hai phần ba (2/3) số thành viên được triệu tập tham dự.", "C. Tuyệt đối 100% thành viên không vắng mặt người nào.", "D. Khoảng một phần ba (1/3) ban chấp hành đồng ý tham gia."], answer: 1 },
+        { q: "Trong xây dựng Đoàn về tổ chức hằng năm, nội dung nào được xác định giữ vai trò là khâu đột phá then chốt?", options: ["A. Nâng cao số lượng đoàn phí thu được hằng tháng.", "B. Nâng cao chất lượng cơ sở đoàn (đoàn cơ sở và chi đoàn cơ sở) là đột phá.", "C. Tăng cường mua sắm phương tiện kỹ thuật công nghệ thông tin.", "D. Cắt giảm tối đa số lượng đoàn viên ở địa bàn nông thôn miền núi."], answer: 1 },
+        { q: "Chủ trương “1+2” trong công tác xây dựng cán bộ đoàn cấp trung ương và cấp tỉnh quy định thời gian đi công tác cơ sở tối thiểu hằng năm là bao nhiêu?", options: ["A. 01 năm tối thiểu có 01 tháng công tác tại cơ sở.", "B. 01 năm tối thiểu có 02 tháng công tác tại cơ sở.", "C. 01 năm tối thiểu có 03 tháng công tác tại cơ sở.", "D. Không giới hạn thời gian quy định bắt buộc này."], answer: 2 },
+        { q: "Chủ trương “1+1” trong công tác thu hút tập hợp thanh niên của tổ chức Đoàn hiện nay được hiểu cụ thể là gì?", options: ["A. Mỗi chi đoàn hằng năm phải kết nạp thêm 01 đảng viên mới.", "B. Mỗi đoàn viên giới thiệu được ít nhất 01 thanh niên tham gia Đoàn, Hội.", "C. Cứ 01 cán bộ đoàn chuyên trách phải quản lý sát sao 01 đoàn viên yếu thế.", "D. Mỗi năm tổ chức Đoàn phải sáp nhập thêm 01 hội nhóm tự phát địa phương."], answer: 1 },
+        { q: "Trong chương trình \"Rèn luyện đoàn viên\", nội dung đoàn viên rèn luyện để đấu tranh chống lại âm mưu phá hoại tư tưởng của các thế lực thù địch thuộc về lĩnh vực rèn luyện nào?", options: ["A. Rèn luyện về lý tưởng cách mạng, nhận thức chính trị.", "B. Rèn luyện về chuyên môn nghiệp vụ kỹ thuật chuyên ngành.", "C. Rèn luyện về sức khỏe thể chất và tầm vóc con người.", "D. Rèn luyện ý thức đóng đoàn phí hằng tháng của tập thể."], answer: 0 },
+        { q: "Tiêu chí rèn luyện chuyên môn nghiệp vụ cụ thể bắt buộc đặt ra đối với đối tượng \"Đoàn viên lực lượng vũ trang\" là gì?", options: ["A. Đi đầu chuẩn hóa văn bản cải cách hành chính văn phòng ủy ban dân sự.", "B. Tích cực rèn luyện kỹ thuật, chiến thuật, sẵn sàng chiến đấu; xây dựng lực lượng vũ trang chính quy, tinh nhuệ, từng bước hiện đại.", "C. Xây dựng mô hình phát triển kinh tế trang trại chăn nuôi gắn với địa bàn dân cư.", "D. Phấn đấu đạt danh hiệu Sinh viên 5 tốt và tích cực trung thực trong thi cử học thuật."], answer: 1 },
+        { q: "Yêu cầu đầu tiên và quan trọng nhất để một đoàn viên xây dựng động cơ vào Đảng đúng đắn là gì?", options: ["A. Để tìm kiếm cơ hội thăng tiến địa vị cán bộ và lợi ích vật chất cá nhân.", "B. Hiểu sâu sắc bản chất, mục đích của Đảng, phấn đấu đứng trong tổ chức của những người cùng chung chí hướng đấu tranh xây dựng xã hội mới tốt đẹp.", "C. Để đủ thủ tục hoàn thiện hồ sơ đi lao động xuất khẩu ở nước ngoài.", "D. Để được miễn giảm các nghĩa vụ hành chính lao động công ích tại cơ sở."], answer: 1 },
+        { q: "Ba yếu tố cốt lõi của kỹ thuật số trong Cách mạng công nghiệp 4.0 đang đặt ra thách thức rất lớn đối với trình độ, năng lực đáp ứng của thanh niên hiện nay bao gồm những yếu tố nào?", options: ["A. Trí tuệ nhân tạo (AI), vạn vật kết nối (IoT) và dữ liệu lớn (Big Data).", "B. Máy hơi nước, động cơ đốt trong và năng lượng điện hạt nhân.", "C. Điện thoại di động thế hệ cũ, kỹ thuật in ấn và mạng viễn thông analog.", "D. Công nghệ thi công cơ giới, thuốc nổ chuyên ngành và bản đồ địa hình bằng giấy."], answer: 0 ]
+    ];
+
+    const SO_CAU_THI = 40; 
+    let quizData = []; 
+    let currentIdx = 0;
+    let userAnswers = [];
+    let userInfo = { name: "", rank: "", unit: "" };
+
+    // Hệ thống âm thanh phản hồi ảo
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playBeep(freq, type, duration) {
+        try {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            osc.type = type; osc.frequency.value = freq;
+            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
+            osc.connect(gain); gain.connect(audioCtx.destination);
+            osc.start(); osc.stop(audioCtx.currentTime + duration);
+        } catch(e) {}
+    }
+
+    function startExamination() {
+        const nameInput = document.getElementById("txt-name").value.trim();
+        const unitInput = document.getElementById("txt-unit").value.trim();
+        const rankInput = document.getElementById("sl-rank").value;
+
+        if (nameInput === "" || unitInput === "") {
+            alert("Báo cáo đồng chí, vui lòng điền đầy đủ thông tin quân nhân để lập danh sách phòng thi!");
+            return;
+        }
+
+        userInfo.name = nameInput;
+        userInfo.rank = rankInput;
+        userInfo.unit = unitInput;
+
+        playBeep(600, 'sine', 0.1);
+        document.getElementById("screen-reg").style.display = "none";
+        document.getElementById("screen-exam").style.display = "block";
+        document.getElementById("lbl-user-tag").innerText = `${userInfo.rank}: ${userInfo.name} - ${userInfo.unit}`;
+
+        generateTest();
+        renderQuestion();
+    }
+
+    function generateTest() {
+        let shuffled = [...CORE_BANK].sort(() => 0.5 - Math.random());
+        quizData = shuffled.slice(0, Math.min(SO_CAU_THI, CORE_BANK.length));
+        userAnswers = new Array(quizData.length).fill(null);
+    }
+
+    function renderQuestion() {
+        if(quizData.length === 0) return;
+        const currentQuiz = quizData[currentIdx];
+        document.getElementById("lbl-progress").innerText = `Câu hỏi kiểm tra: ${currentIdx + 1}/${quizData.length}`;
+        document.getElementById("box-q").innerText = `Câu ${currentIdx + 1}: ${currentQuiz.q}`;
+        
+        const optionsContainer = document.getElementById("box-opts");
+        optionsContainer.innerHTML = "";
+        
+        currentQuiz.options.forEach((opt, index) => {
+            const btn = document.createElement("button");
+            btn.classList.add("opt-btn");
+            btn.innerText = opt;
+            
+            if(userAnswers[currentIdx] === index) {
+                btn.style.background = "#d35400";
+                btn.style.borderColor = "var(--accent-gold)";
+            }
+            
+            btn.onclick = () => {
+                playBeep(800, 'sine', 0.05);
+                userAnswers[currentIdx] = index;
+                renderQuestion();
+            };
+            optionsContainer.appendChild(btn);
+        });
+
+        document.getElementById("btn-prev").disabled = currentIdx === 0;
+        document.getElementById("btn-next").innerText = currentIdx === quizData.length - 1 ? "Nộp bài" : "Tiếp theo";
+    }
+
+    function moveQuestion(step) {
+        playBeep(500, 'sine', 0.08);
+        if (step === 1 && userAnswers[currentIdx] === null) {
+            alert("Đồng chí chưa chọn phương án trả lời cho câu hỏi này!");
+            return;
+        }
+        currentIdx += step;
+        if (currentIdx >= quizData.length) {
+            evaluateResult();
+        } else {
+            renderQuestion();
+        }
+    }
+
+    function evaluateResult() {
+        playBeep(440, 'triangle', 0.3);
+        document.getElementById("screen-exam").style.display = "none";
+        document.getElementById("screen-res").style.display = "block";
+        
+        let correct = 0;
+        userAnswers.forEach((ans, idx) => {
+            if(ans === quizData[idx].answer) correct++;
+        });
+        
+        let ratio = (correct / quizData.length) * 100;
+        let rankStr = "";
+        let finalColor = "var(--success)";
+
+        if (ratio >= 90) { rankStr = "Xếp loại: XUẤT SẮC 🎖️"; finalColor = "#2ecc71"; }
+        else if (ratio >= 80) { rankStr = "Xếp loại: GIỎI 🏅"; finalColor = "#3498db"; }
+        else if (ratio >= 65) { rankStr = "Xếp loại: KHÁ 👍"; finalColor = "#f1c40f"; }
+        else if (ratio >= 50) { rankStr = "Xếp loại: ĐẠT ✅"; finalColor = "#e67e22"; }
+        else { rankStr = "Xếp loại: KHÔNG ĐẠT ❌"; finalColor = "#e74c3c"; }
+
+        document.getElementById("out-name").innerText = userInfo.name;
+        document.getElementById("out-rank").innerText = userInfo.rank;
+        document.getElementById("out-unit").innerText = userInfo.unit;
+        
+        const scoreTxt = document.getElementById("out-score");
+        scoreTxt.innerText = `${correct}/${quizData.length}`;
+        scoreTxt.style.color = finalColor;
+
+        const rankTxt = document.getElementById("out-rank-lbl");
+        rankTxt.innerText = rankStr;
+        rankTxt.style.color = finalColor;
+    }
+</script>
+</body>
+</html>
