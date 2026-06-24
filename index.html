@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HỆ THỐNG THI NHẬN THỨC SỐ - ĐẠI ĐỘI CÔNG BINH 1</title>
+    <title>HỆ THỐNG THI NHẬN THỨC SỐ - CHI ĐOÀN ĐẠI ĐỘI CÔNG BINH 1</title>
     <style>
         :root { 
-            --primary-green: #1b3322; 
-            --army-green: #2e4a3e;
+            --primary-blue: #0056b3; 
+            --bg-gradient: #0f2027;
+            --card-bg: #112d4e; 
             --accent-gold: #f1c40f; 
-            --border-gold: #cd7f32; 
-            --text-light: #eaeded;
-            --btn-dark: #1a252f;
+            --border-gold: #fdcb6e; 
+            --text-light: #f7f9fa;
+            --btn-dark: #1c3d5a;
             --success: #2ecc71;
             --danger: #e74c3c;
         }
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: radial-gradient(circle, var(--army-green) 0%, #112217 100%);
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             color: var(--text-light); 
             margin: 0; 
             padding: 10px; 
@@ -27,15 +28,16 @@
             min-height: 98vh;
         }
         .container { 
-            background: var(--primary-green); 
+            background: var(--card-bg); 
             width: 100%; 
             max-width: 500px; 
             border-radius: 16px; 
             border: 3px solid var(--border-gold); 
             padding: 25px; 
-            box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         .container::before {
             content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 6px;
@@ -47,29 +49,30 @@
             padding-bottom: 15px; 
             margin-bottom: 20px; 
         }
-        .main-header h1 { color: var(--accent-gold); margin: 5px 0; font-size: 20px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 1px 1px 3px #000; }
-        .main-header p { margin: 4px 0; font-size: 13px; color: #bdc3c7; font-weight: 500; }
+        .main-header h3 { color: #3498db; margin: 0; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; font-weight: bold; }
+        .main-header h1 { color: var(--accent-gold); margin: 6px 0; font-size: 19px; text-transform: uppercase; letter-spacing: 0.5px; text-shadow: 1px 1px 3px #000; font-weight: 800; }
+        .main-header p { margin: 4px 0; font-size: 13px; color: #b2bec3; font-weight: 500; }
         
-        .form-box { margin-bottom: 15px; }
+        .form-box { margin-bottom: 15px; text-align: left; }
         .form-box label { display: block; font-size: 14px; margin-bottom: 6px; color: var(--accent-gold); font-weight: bold; }
-        .input-field { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #456b56; background: #0b150f; color: #fff; font-size: 15px; box-sizing: border-box; transition: 0.3s; }
-        .input-field:focus { border-color: var(--accent-gold); box-shadow: 0 0 8px rgba(241, 196, 15, 0.3); outline: none; }
+        .input-field { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #34495e; background: #0b1c2c; color: #fff; font-size: 15px; box-sizing: border-box; transition: 0.3s; }
+        .input-field:focus { border-color: var(--accent-gold); box-shadow: 0 0 8px rgba(241, 196, 15, 0.4); outline: none; }
         
-        .action-btn { display: block; width: 100%; background: linear-gradient(135deg, #d35400, #e67e22); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: 0.2s; }
+        .action-btn { display: block; width: 100%; background: linear-gradient(135deg, #e67e22, #d35400); color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: 0.2s; text-align: center; }
         .action-btn:hover { filter: brightness(1.1); }
         .action-btn:active { transform: scale(0.98); }
 
-        .q-text { font-size: 16px; font-weight: bold; line-height: 1.5; margin-bottom: 20px; background: #15281b; padding: 15px; border-radius: 8px; border-left: 5px solid var(--accent-gold); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); }
-        .opt-btn { display: block; width: 100%; background: var(--btn-dark); color: white; border: 1px solid #2c3e50; padding: 14px; margin: 12px 0; border-radius: 8px; cursor: pointer; text-align: left; font-size: 14px; transition: all 0.2s ease; line-height: 1.4; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
-        .opt-btn:hover { background: #253342; border-color: #34495e; }
+        .q-text { font-size: 16px; font-weight: bold; line-height: 1.5; margin-bottom: 20px; background: #0b1c2c; padding: 15px; border-radius: 8px; border-left: 5px solid var(--accent-gold); box-shadow: inset 0 0 10px rgba(0,0,0,0.5); text-align: left; }
+        .opt-btn { display: block; width: 100%; background: var(--btn-dark); color: white; border: 1px solid #2980b9; padding: 14px; margin: 12px 0; border-radius: 8px; cursor: pointer; text-align: left; font-size: 14px; transition: all 0.2s ease; line-height: 1.4; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+        .opt-btn:hover { background: #244b6e; border-color: var(--accent-gold); }
         
-        .footer-nav { display: flex; justify-content: space-between; margin-top: 25px; border-top: 1px solid #233f2b; padding-top: 15px; }
-        .nav-control { background: linear-gradient(to bottom, #cd7f32, #b86b20); color: white; border: none; padding: 10px 22px; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
+        .footer-nav { display: flex; justify-content: space-between; margin-top: 25px; border-top: 1px solid #1c3d5a; padding-top: 15px; }
+        .nav-control { background: linear-gradient(to bottom, #3498db, #2980b9); color: white; border: none; padding: 10px 22px; border-radius: 6px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(0,0,0,0.3); }
         .nav-control:disabled { background: #7f8c8d; cursor: not-allowed; box-shadow: none; opacity: 0.6; }
         
         .result-panel { text-align: center; display: none; }
-        .badge-card { background: #090f0b; border: 2px dashed var(--border-gold); padding: 18px; border-radius: 12px; margin: 20px 0; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .badge-card p { margin: 8px 0; font-size: 15px; border-bottom: 1px solid #15281b; padding-bottom: 5px; }
+        .badge-card { background: #0b1c2c; border: 2px dashed var(--border-gold); padding: 18px; border-radius: 12px; margin: 20px 0; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .badge-card p { margin: 8px 0; font-size: 15px; border-bottom: 1px solid #1c3d5a; padding-bottom: 5px; }
         .badge-card span { font-weight: bold; color: var(--accent-gold); }
         .final-score { font-size: 50px; font-weight: bold; margin: 15px 0; text-align: center; text-shadow: 2px 2px 4px #000; }
         .rank-lbl { font-size: 22px; font-weight: bold; text-align: center; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
@@ -80,12 +83,13 @@
 <div class="container">
     <div id="screen-reg">
         <div class="main-header">
-            <h1>Hệ Thống Kiểm Tra Số</h1>
-            <p>Đại đội Công binh 1 - Bộ CHQS Tỉnh Gia Lai</p>
+            <h3>ĐOÀN CƠ SỞ PHÒNG THAM MƯU</h3>
+            <h1>CHI ĐOÀN ĐẠI ĐỘI CÔNG BINH 1</h1>
+            <p>Hệ Thống Kiểm Tra Nhận Thức Số Năm 2026</p>
         </div>
         <div class="form-box">
             <label>Họ và tên đoàn viên, chiến sĩ:</label>
-            <input type="text" id="txt-name" class="input-field" placeholder="Ví dụ: Nguyễn Văn An" autocomplete="off">
+            <input type="text" id="txt-name" class="input-field" placeholder="Ví dụ: Nguyễn Văn C" autocomplete="off">
         </div>
         <div class="form-box">
             <label>Cấp bậc hiện tại:</label>
@@ -99,16 +103,17 @@
         </div>
         <div class="form-box">
             <label>Tiểu đội / Trung đội:</label>
-            <input type="text" id="txt-unit" class="input-field" placeholder="Ví dụ: Tiểu đội 1 - Trung đội 2" autocomplete="off">
+            <input type="text" id="txt-unit" class="input-field" placeholder="Ví dụ: Tiểu đội 2 - Trung đội 1" autocomplete="off">
         </div>
         <button class="action-btn" onclick="startExamination()">Vào làm bài</button>
     </div>
 
     <div id="screen-exam" style="display: none;">
         <div class="main-header">
-            <h1>Bài Thi Nhận Thức</h1>
+            <h3>ĐOÀN CƠ SỞ PHÒNG THAM MƯU</h3>
+            <h1 style="font-size: 16px; margin: 4px 0;">CHI ĐOÀN ĐẠI ĐỘI CÔNG BINH 1</h1>
             <p id="lbl-user-tag" style="color: var(--accent-gold); font-weight: bold; font-size: 14px;"></p>
-            <p id="lbl-progress" style="font-size: 12px; margin-top: 2px;">Câu hỏi: 1/40</p>
+            <p id="lbl-progress" style="font-size: 12px; margin-top: 4px;">Câu hỏi: 1/40</p>
         </div>
         <div class="q-text" id="box-q">Đang nạp đề...</div>
         <div id="box-opts"></div>
@@ -120,8 +125,9 @@
 
     <div id="screen-res" class="result-panel">
         <div class="main-header">
-            <h1>Kết Quả Kiểm Tra</h1>
-            <p>Chi đoàn Đại đội Công binh 1 chính thức chứng nhận</p>
+            <h3>ĐOÀN CƠ SỞ PHÒNG THAM MƯU</h3>
+            <h1>CHI ĐOÀN ĐẠI ĐỘI CÔNG BINH 1</h1>
+            <p>Phiếu Chứng Nhận Kết Quả Kiểm Tra Nhận Thức</p>
         </div>
         <div class="badge-card">
             <p>Họ và tên: <span id="out-name">...</span></p>
@@ -131,7 +137,7 @@
             <div class="rank-lbl" id="out-rank-lbl">...</div>
         </div>
         <p style="font-size: 13px; color: #bdc3c7; font-style: italic; line-height: 1.4;">Đồng chí hãy chụp ảnh lại màn hình kết quả này và gửi vào nhóm Zalo đơn vị để tổ chức ghi nhận điểm thi đua.</p>
-        <button class="nav-control" style="width: 100%; padding: 12px; margin-top: 10px;" onclick="location.reload()">Thi đề khác</button>
+        <button class="nav-control" style="width: 100%; padding: 12px; margin-top: 10px; background: linear-gradient(to bottom, #e67e22, #d35400);" onclick="location.reload()">Thi đề khác</button>
     </div>
 </div>
 
@@ -149,7 +155,7 @@
         { q: "Sứ mệnh lịch sử toàn thế giới của giai cấp công nhân theo Chủ nghĩa xã hội khoa học là gì?", options: ["A. Hợp tác lâu dài với giai cấp tư sản để duy trì phương thức sản xuất cũ.", "B. Lật đổ chủ nghĩa tư bản, xây dựng xã hội mới - xã hội chủ nghĩa không còn người áp bức người.", "C. Độc chiếm toàn bộ tư liệu sản xuất để trở thành giai cấp bóc lột mới.", "D. Hủy bỏ hoàn toàn bộ máy nhà nước và không xây dựng hệ thống pháp luật."], answer: 1 },
         { q: "Mô hình chủ nghĩa xã hội hiện thực ở một số nước trước thời kỳ \"đổi mới, cải cách, cải tổ\" có hạn chế gì được nêu trong tài liệu?", options: ["A. Chạy theo kinh tế thị trường tự do quá mức dẫn đến phân hóa giàu nghèo.", "B. Có những biểu hiện giáo điều, xơ cứng, bảo thủ, chậm đổi mới.", "C. Buông lỏng hoàn toàn sự lãnh đạo của Đảng Cộng sản.", "D. Quá chú trọng vào việc thu hút vốn đầu tư nước ngoài."], answer: 1 },
         { q: "Đặc trưng nào sau đây của chủ nghĩa xã hội Việt Nam vừa là đặc trưng thứ nhất, vừa là mục tiêu của sự nghiệp xây dựng đất nước?", options: ["A. Có nền văn hóa tiên tiến, đậm đà bản sắc dân tộc.", "B. Dân giàu, nước mạnh, dân chủ, công bằng, văn minh.", "C. Do Nhân dân làm chủ.", "D. Có Nhà nước pháp quyền xã hội chủ nghĩa."], answer: 1 },
-        { q: "Học thuyết nào của Triết học Mác - Lênin chỉ ra rằng lực lượng sản xuất vận động phát triển sẽ mâu thuẫn với quan hệ sản xuất hiện có, làm thay đổi hình thái kinh tế - xã hội cũ?", options: ["A. Học thuyết giá trị thặng dư.", "B. Học thuyết hình thái kinh tế - xã hội.", "C. Học thuyết về sứ mệnh lịch sử của công nhân.", "D. Học thuyết bản chất con người hiện thực."], answer: 1 },
+        { q: "Học thuyết nào của Triết học Mác - Lênin chỉ ra rằng lực lượng sản xuất vận động phát triển sẽ mâu chuẫn với quan hệ sản xuất hiện có, làm thay đổi hình thái kinh tế - xã hội cũ?", options: ["A. Học thuyết giá trị thặng dư.", "B. Học thuyết hình thái kinh tế - xã hội.", "C. Học thuyết về sứ mệnh lịch sử của công nhân.", "D. Học thuyết bản chất con người hiện thực."], answer: 1 },
         { q: "Nguyên nhân của mọi mâu thuẫn trong lòng phương thức sản xuất tư bản chủ nghĩa theo Kinh tế chính trị học Mác - Lênin là gì?", options: ["A. Mâu thuẫn giữa tính xã hội hóa cao của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.", "B. Mâu thuẫn giữa trình độ công nghệ thông tin với phương thức quản lý thủ công.", "C. Mâu thuẫn giữa nhu cầu tiêu dùng của nông dân với năng lực sản xuất của địa chủ.", "D. Mâu thuẫn giữa các công ty độc quyền quốc tế với nhau."], answer: 0 },
         { q: "Đặc trưng không thể thiếu, phân biệt chủ nghĩa Mác - Lênin với các học thuyết trước đó về thế giới quan và phương pháp luận là gì?", options: ["A. Tách rời thế giới quan khoa học với phương pháp luận biện chứng.", "B. Sự thống nhất hữu cơ giữa thế giới quan khoa học và phương pháp luận mácxít.", "C. Tuyệt đối hóa phương pháp tư duy siêu hình trong mọi lĩnh vực.", "D. Chỉ thừa nhận phép biện chứng tâm linh, phủ nhận thế giới quan duy vật."], answer: 1 },
         { q: "Bản chất vốn có của chủ nghĩa Mác - Lênin được các nhà sáng lập khẳng định như thế nào?", options: ["A. Là một hệ thống giáo điều khép kín, chân lý tuyệt đích cuối cùng.", "B. Là một hệ thống bất khả xâm phạm, không bao giờ được thay đổi.", "C. Là một học thuyết mở, không ngừng được đổi mới, phát triển trong dòng trí tuệ nhân loại.", "D. Là một lý thuyết chỉ áp dụng riêng cho nước Nga và châu Âu."], answer: 2 },
@@ -179,7 +185,7 @@
         { q: "Sự kiện nào đánh dấu bước chuyển biến quyết định trong tư tưởng và lập trường chính trị của Nguyễn Ái Quốc từ chủ nghĩa yêu nước sang chủ nghĩa cộng sản?", options: ["A. Gửi Bản yêu sách tám điểm tới Hội nghị Vécxây (tháng 6-1919).", "B. Đọc bản Sơ thảo Luận cương về vấn đề dân tộc và thuộc địa của Lênin (tháng 7-1920).", "C. Bỏ phiếu tán thành gia nhập Quốc tế thứ ba và tham gia sáng lập Đảng Cộng sản Pháp (tháng 12-1920).", "D. Thành lập Hội Việt Nam cách mạng thanh niên tại Quảng Châu (tháng 6-1925)."], answer: 2 },
         { q: "Ba tổ chức cộng sản ra đời ở ba miền nước ta vào năm 1929 bao gồm những tổ chức nào?", options: ["A. Đông Dương Cộng sản Đảng, An Nam Cộng sản Đảng, Đông Dương Cộng sản liên đoàn.", "B. Việt Nam Quốc dân Đảng, Tâm Tâm xã, Hội Phục Việt.", "C. Đảng Lao động Việt Nam, Xô viết Nghệ Tĩnh, Mặt trận Việt Minh.", "D. Cộng sản Đoàn, Nhóm châu Á, Hội liên hiệp thuộc địa."], answer: 0 },
         { q: "Hội nghị hợp nhất các tổ chức cộng sản thành lập Đảng Cộng sản Việt Nam diễn ra từ ngày 06-01 đến ngày 07-02-1930 tại địa điểm nào?", options: ["A. Quảng Châu (Trung Quốc).", "B. Bán đảo Cửu Long (Hương Cảng, Trung Quốc).", "C. Cao Bằng (Việt Nam).", "D. Paris (Pháp)."], answer: 1 },
-        { q: "Đàg Cộng sản Việt Nam ra đời là sản phẩm của sự kết hợp giữa ba yếu tố nào?", options: ["A. Triết học Đức, Kinh tế Anh, Không tưởng Pháp.", "B. Chủ nghĩa Mác - Lênin, phong trào công nhân và phong trào yêu nước Việt Nam.", "C. Tinh thần Cần Vương, Nho giáo tiến bộ và tư tưởng tư sản.", "D. Khát vọng của nhân dân, vũ khí hiện đại và nguồn tài chính quốc tế."], answer: 1 },
+        { q: "Đảng Cộng sản Việt Nam ra đời là sản phẩm của sự kết hợp giữa ba yếu tố nào?", options: ["A. Triết học Đức, Kinh tế Anh, Không tưởng Pháp.", "B. Chủ nghĩa Mác - Lênin, phong trào công nhân và phong trào yêu nước Việt Nam.", "C. Tinh thần Cần Vương, Nho giáo tiến bộ và tư tưởng tư sản.", "D. Khát vọng của nhân dân, vũ khí hiện đại và nguồn tài chính quốc tế."], answer: 1 },
         { q: "Qua 15 năm (1930 - 1945) lãnh đạo cách mạng, ba cao trào cách mạng lớn do Đảng tổ chức tạo tiền đề cho thắng lợi của Cách mạng tháng Tám là gì?", options: ["A. Cao trào 1930-1931; Cao trào dân sinh dân chủ 1936-1939; Cao trào giải phóng dân tộc 1939-1945.", "B. Khởi nghĩa Yên Bái; Khởi nghĩa Nam Kỳ; Binh biến Đô Lương.", "C. Phong trào Đông Du; Phong trào Duy Tân; Phong trào Cần Vương.", "D. Chiến dịch Biên giới; Chiến dịch Tây Bắc; Chiến dịch Điện Biên Phủ."], answer: 0 },
         { q: "Nước Việt Nam Dân chủ Cộng hòa - Nhà nước của Nhân dân, do Nhân dân và vì Nhân dân chính thức được khai sinh vào ngày tháng năm nào?", options: ["A. Ngày 03 tháng 02 năm 1930.", "B. Ngày 19 tháng 08 năm 1945.", "C. Ngày 02 tháng 09 năm 1945.", "D. Ngày 19 tháng 12 năm 1946."], answer: 2 },
         { q: "Sau Cách mạng tháng Tám năm 1945, vận mệnh nước ta đứng trước những khó khăn nghiêm trọng nào đe dọa trực tiếp, được ví như \"ngàn cân treo sợi tóc\"?", options: ["A. Nền kinh tế kiệt quệ, nạn đói đe dọa, hơn 90% dân số mù chữ, ngoại xâm và nội phản chống phá.", "B. Sự khủng hoảng của hệ thống xã hội chủ nghĩa trên thế giới.", "C. Lạm phát phi mã và tỷ lệ thất nghiệp của công nhân công nghệ cao.", "D. Sự bất đồng về đường lối đối ngoại giữa các nước lân bang."], answer: 0 },
@@ -235,7 +241,7 @@
         { q: "Chủ trương “1+1” trong công tác thu hút tập hợp thanh niên của tổ chức Đoàn hiện nay được hiểu cụ thể là gì?", options: ["A. Mỗi chi đoàn hằng năm phải kết nạp thêm 01 đảng viên mới.", "B. Mỗi đoàn viên giới thiệu được ít nhất 01 thanh niên tham gia Đoàn, Hội.", "C. Cứ 01 cán bộ đoàn chuyên trách phải quản lý sát sao 01 đoàn viên yếu thế.", "D. Mỗi năm tổ chức Đoàn phải sáp nhập thêm 01 hội nhóm tự phát địa phương."], answer: 1 },
         { q: "Trong chương trình \"Rèn luyện đoàn viên\", nội dung đoàn viên rèn luyện để đấu tranh chống lại âm mưu phá hoại tư tưởng của các thế lực thù địch thuộc về lĩnh vực rèn luyện nào?", options: ["A. Rèn luyện về lý tưởng cách mạng, nhận thức chính trị.", "B. Rèn luyện về chuyên môn nghiệp vụ kỹ thuật chuyên ngành.", "C. Rèn luyện về sức khỏe thể chất và tầm vóc con người.", "D. Rèn luyện ý thức đóng đoàn phí hằng tháng của tập thể."], answer: 0 },
         { q: "Tiêu chí rèn luyện chuyên môn nghiệp vụ cụ thể bắt buộc đặt ra đối với đối tượng \"Đoàn viên lực lượng vũ trang\" là gì?", options: ["A. Đi đầu chuẩn hóa văn bản cải cách hành chính văn phòng ủy ban dân sự.", "B. Tích cực rèn luyện kỹ thuật, chiến thuật, sẵn sàng chiến đấu; xây dựng lực lượng vũ trang chính quy, tinh nhuệ, từng bước hiện đại.", "C. Xây dựng mô hình phát triển kinh tế trang trại chăn nuôi gắn với địa bàn dân cư.", "D. Phấn đấu đạt danh hiệu Sinh viên 5 tốt và tích cực trung thực trong thi cử học thuật."], answer: 1 },
-        { q: "Yêu cầu đầu tiên và quan trọng nhất để một đoàn viên xây dựng động cơ vào Đảng đúng đắn là gì?", options: ["A. Để tìm kiếm cơ hội thăng tiến địa vị cán bộ và lợi ích vật chất cá nhân.", "B. Hiểu sâu sắc bản chất, mục đích của Đảng, phấn đấu đứng trong tổ chức của những người cùng chung chí hướng đấu tranh xây dựng xã hội mới tốt đẹp.", "C. Để đủ thủ tục hoàn thiện hồ sơ đi lao động xuất khẩu ở nước ngoài.", "D. Để được miễn giảm các nghĩa vụ hành chính lao động công ích tại cơ sở."], answer: 1 },
+        { q: "Yêu cầu đầu tiên và quan trọng nhất để một đoàn viên xây dựng động cơ vào Đảng đúng đắn là gì?", options: ["A. Để tìm kiếm cơ hội thăng tiến địa vị cán bộ và lợi ích vật chất cá nhân.", "B. Hiểu sâu sắc bản chất, mục đích của Đảng, phấn đấu đứng trong tổ chức of những người cùng chung chí hướng đấu tranh xây dựng xã hội mới tốt đẹp.", "C. Để đủ thủ tục hoàn thiện hồ sơ đi lao động xuất khẩu ở nước ngoài.", "D. Để được miễn giảm các nghĩa vụ hành chính lao động công ích tại cơ sở."], answer: 1 },
         { q: "Ba yếu tố cốt lõi của kỹ thuật số trong Cách mạng công nghiệp 4.0 đang đặt ra thách thức rất lớn đối với trình độ, năng lực đáp ứng của thanh niên hiện nay bao gồm những yếu tố nào?", options: ["A. Trí tuệ nhân tạo (AI), vạn vật kết nối (IoT) và dữ liệu lớn (Big Data).", "B. Máy hơi nước, động cơ đốt trong và năng lượng điện hạt nhân.", "C. Điện thoại di động thế hệ cũ, kỹ thuật in ấn và mạng viễn thông analog.", "D. Công nghệ thi công cơ giới, thuốc nổ chuyên ngành và bản đồ địa hình bằng giấy."], answer: 0 ]
     ];
 
@@ -245,7 +251,6 @@
     let userAnswers = [];
     let userInfo = { name: "", rank: "", unit: "" };
 
-    // Hệ thống âm thanh phản hồi ảo
     const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     function playBeep(freq, type, duration) {
         try {
