@@ -81,6 +81,7 @@
 <body>
 
 <div class="container">
+    <!-- MÀN HÌNH ĐĂNG KÝ -->
     <div id="screen-reg">
         <div class="main-header">
             <h3>ĐOÀN CƠ SỞ PHÒNG THAM MƯU</h3>
@@ -108,11 +109,12 @@
         <button class="action-btn" onclick="startExamination()">Vào làm bài</button>
     </div>
 
+    <!-- MÀN HÌNH THI -->
     <div id="screen-exam" style="display: none;">
         <div class="main-header">
             <h3>ĐOÀN CƠ SỞ PHÒNG THAM MƯU</h3>
             <h1 style="font-size: 16px; margin: 4px 0;">CHI ĐOÀN ĐẠI ĐỘI CÔNG BINH 1</h1>
-            <p id="lbl-user-tag" style="color: var(--accent-gold); font-weight: bold; font-size: 14px;"></p>
+            <p id="lbl-user-tag" style="color: #f1c40f; font-weight: bold; font-size: 14px;"></p>
             <p id="lbl-progress" style="font-size: 12px; margin-top: 4px;">Câu hỏi: 1/40</p>
         </div>
         <div class="q-text" id="box-q">Đang nạp đề...</div>
@@ -123,6 +125,7 @@
         </div>
     </div>
 
+    <!-- MÀN HÌNH KẾT QUẢ -->
     <div id="screen-res" class="result-panel">
         <div class="main-header">
             <h3>ĐOÀN CƠ SỞ PHÒNG THAM MƯU</h3>
@@ -142,7 +145,7 @@
 </div>
 
 <script>
-    // NGÂN HÀNG DỮ LIỆU ĐẦY ĐỦ 100% CỦA ĐƠN VỊ CƠ SỞ (0=A, 1=B, 2=C, 3=D)
+    // NGÂN HÀNG DỮ LIỆU ĐẦY ĐỦ CỦA ĐƠN VỊ CƠ SỞ (0=A, 1=B, 2=C, 3=D)
     const CORE_BANK = [
         { q: "Chủ nghĩa Mác ra đời vào khoảng thời gian nào?", options: ["A. Những năm 20 của thế kỷ XIX.", "B. Những năm 30 của thế kỷ XIX.", "C. Những năm 40 của thế kỷ XIX.", "D. Những năm 50 của thế kỷ XIX."], answer: 2 },
         { q: "Điều kiện chính trị - xã hội quan trọng nhất cho sự ra đời của chủ nghĩa Mác là gì?", options: ["A. Sự phát triển của các công ty độc quyền ở châu Âu.", "B. Sự xuất hiện giai cấp vô sản trên vũ đài lịch sử và cuộc đấu tranh của họ.", "C. Sự sụp đổ của chế độ phong kiến trên toàn thế giới.", "D. Sự hình thành hệ thống thuộc địa của chủ nghĩa thực dân."], answer: 1 },
@@ -155,7 +158,7 @@
         { q: "Sứ mệnh lịch sử toàn thế giới của giai cấp công nhân theo Chủ nghĩa xã hội khoa học là gì?", options: ["A. Hợp tác lâu dài với giai cấp tư sản để duy trì phương thức sản xuất cũ.", "B. Lật đổ chủ nghĩa tư bản, xây dựng xã hội mới - xã hội chủ nghĩa không còn người áp bức người.", "C. Độc chiếm toàn bộ tư liệu sản xuất để trở thành giai cấp bóc lột mới.", "D. Hủy bỏ hoàn toàn bộ máy nhà nước và không xây dựng hệ thống pháp luật."], answer: 1 },
         { q: "Mô hình chủ nghĩa xã hội hiện thực ở một số nước trước thời kỳ \"đổi mới, cải cách, cải tổ\" có hạn chế gì được nêu trong tài liệu?", options: ["A. Chạy theo kinh tế thị trường tự do quá mức dẫn đến phân hóa giàu nghèo.", "B. Có những biểu hiện giáo điều, xơ cứng, bảo thủ, chậm đổi mới.", "C. Buông lỏng hoàn toàn sự lãnh đạo của Đảng Cộng sản.", "D. Quá chú trọng vào việc thu hút vốn đầu tư nước ngoài."], answer: 1 },
         { q: "Đặc trưng nào sau đây của chủ nghĩa xã hội Việt Nam vừa là đặc trưng thứ nhất, vừa là mục tiêu của sự nghiệp xây dựng đất nước?", options: ["A. Có nền văn hóa tiên tiến, đậm đà bản sắc dân tộc.", "B. Dân giàu, nước mạnh, dân chủ, công bằng, văn minh.", "C. Do Nhân dân làm chủ.", "D. Có Nhà nước pháp quyền xã hội chủ nghĩa."], answer: 1 },
-        { q: "Học thuyết nào của Triết học Mác - Lênin chỉ ra rằng lực lượng sản xuất vận động phát triển sẽ mâu chuẫn với quan hệ sản xuất hiện có, làm thay đổi hình thái kinh tế - xã hội cũ?", options: ["A. Học thuyết giá trị thặng dư.", "B. Học thuyết hình thái kinh tế - xã hội.", "C. Học thuyết về sứ mệnh lịch sử của công nhân.", "D. Học thuyết bản chất con người hiện thực."], answer: 1 },
+        { q: "Học thuyết nào của Triết học Mác - Lênin chỉ ra rằng lực lượng sản xuất vận động phát triển sẽ mâu thuẫn với quan hệ sản xuất hiện có, làm thay đổi hình thái kinh tế - xã hội cũ?", options: ["A. Học thuyết giá trị thặng dư.", "B. Học thuyết hình thái kinh tế - xã hội.", "C. Học thuyết về sứ mệnh lịch sử của công nhân.", "D. Học thuyết bản chất con người hiện thực."], answer: 1 },
         { q: "Nguyên nhân của mọi mâu thuẫn trong lòng phương thức sản xuất tư bản chủ nghĩa theo Kinh tế chính trị học Mác - Lênin là gì?", options: ["A. Mâu thuẫn giữa tính xã hội hóa cao của lực lượng sản xuất với chế độ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.", "B. Mâu thuẫn giữa trình độ công nghệ thông tin với phương thức quản lý thủ công.", "C. Mâu thuẫn giữa nhu cầu tiêu dùng của nông dân với năng lực sản xuất của địa chủ.", "D. Mâu thuẫn giữa các công ty độc quyền quốc tế với nhau."], answer: 0 },
         { q: "Đặc trưng không thể thiếu, phân biệt chủ nghĩa Mác - Lênin với các học thuyết trước đó về thế giới quan và phương pháp luận là gì?", options: ["A. Tách rời thế giới quan khoa học với phương pháp luận biện chứng.", "B. Sự thống nhất hữu cơ giữa thế giới quan khoa học và phương pháp luận mácxít.", "C. Tuyệt đối hóa phương pháp tư duy siêu hình trong mọi lĩnh vực.", "D. Chỉ thừa nhận phép biện chứng tâm linh, phủ nhận thế giới quan duy vật."], answer: 1 },
         { q: "Bản chất vốn có của chủ nghĩa Mác - Lênin được các nhà sáng lập khẳng định như thế nào?", options: ["A. Là một hệ thống giáo điều khép kín, chân lý tuyệt đích cuối cùng.", "B. Là một hệ thống bất khả xâm phạm, không bao giờ được thay đổi.", "C. Là một học thuyết mở, không ngừng được đổi mới, phát triển trong dòng trí tuệ nhân loại.", "D. Là một lý thuyết chỉ áp dụng riêng cho nước Nga và châu Âu."], answer: 2 },
@@ -230,7 +233,7 @@
         { q: "Đại Đại từ, Thái Nguyên (tháng 2/1950) với sự tham gia của hơn 400 đại biểu là kỳ Đại hội đại biểu toàn quốc lần thứ mấy của Đoàn?", options: ["A. Đại hội lần thứ I.", "B. Đại hội lần thứ II.", "C. Đại hội lần thứ III.", "D. Đại hội lần thứ IV."], answer: 0 },
         { q: "Phong tào thi đua hành động cách mạng nổi tiếng \"Ba sẵn sàng\" của thanh niên miền Bắc và \"Năm xung phong\" của thanh niên miền Nam được phát động mạnh mẽ trong nhiệm kỳ Đại hội nào của Đoàn?", options: ["A. Đại hội lần thứ II.", "B. Đại hội lần thứ III.", "C. Đại hội lần thứ IV.", "D. Đại hội lần thứ V."], answer: 1 },
         { q: "Hai phong trào hành động lớn \"Thanh niên lập nghiệp\" và \"Tuổi trẻ giữ nước\" chính thức được Đoàn phát động vào thời gian nào (tháng 2/1993)?", options: ["A. Trong nhiệm kỳ Đại hội IV.", "B. Trong nhiệm kỳ Đại hội V.", "C. Trong nhiệm kỳ Đại hội VI.", "D. Trong nhiệm kỳ Đại hội VII."], answer: 2 },
-        { q: "Ba phong trào hành động cách mạng được triển khai đồng bộ toàn Đoàn trong giai đoạn hiện nay (từ Đại hội XI) bao gồm những phong trào nào?", options: ["A. Thanh niên tình nguyện, Tuổi trẻ sáng tạo, Tuổi trẻ xung kích bảo vệ Tổ quốc.", "B. Ba sẵn sàng, Năm xung phong, Quyết thắng quân sự.", "C. Thanh niên lập nghiệp, Tuổi trẻ giữ nước, Đền ơn đáp nghĩa.", "D. Cải cách hành chính, Hội nhập quốc tế, Lao động rèn luyện tay nghề."], answer: 0 },
+        { q: "Ba phong trào hành động cách mạng được triển khai đồng bộ toàn Đoàn trong giai đoạn hiện nay (từ Đại hội XI) bao gồm những phong trào nào?", options: ["A. Thanh niên tình nguyện, Tuổi trẻ sáng tạo, Tủi trẻ xung kích bảo vệ Tổ quốc.", "B. Ba sẵn sàng, Năm xung phong, Quyết thắng quân sự.", "C. Thanh niên lập nghiệp, Tuổi trẻ giữ nước, Đền ơn đáp nghĩa.", "D. Cải cách hành chính, Hội nhập quốc tế, Lao động rèn luyện tay nghề."], answer: 0 },
         { q: "Nội dung thuộc tính vị trí của Đoàn đối với Đảng Cộng sản Việt Nam được khẳng định như thế nào trong Điều lệ?", options: ["A. Đoàn là tổ chức độc lập tuyệt đối, không chịu sự định hướng chính trị của Đảng.", "B. Đoàn là đội dự bị tin cậy của Đảng, đội quân xung kích cách mạng phấn đấu vì mục tiêu lý tưởng của Đảng.", "C. Đoàn giữ vai trò lãnh đạo, chỉ đạo tối cao đối với các cấp ủy Đảng cơ sở.", "D. Đoàn là cơ quan chấp hành hành chính thuộc bộ máy quản lý nhà nước."], answer: 1 },
         { q: "Điền cụm từ còn thiếu vào mối quan hệ gắn bó hữu cơ giữa công tác Đảng và công tác Đoàn: “Xây dựng Đoàn vững mạnh là nội dung quan trọng trong công tác xây dựng Đảng, là .......”?", options: ["A. Nhiệm vụ của cơ quan quân sự địa phương.", "B. Xây dựng Đảng trước một bước.", "C. Giải pháp tình thế khi thiếu hụt cán bộ.", "D. Mục tiêu duy nhất của phong trào thanh niên."], answer: 1 },
         { q: "Đối với tổ chức Đội Thiếu niên Tiền phong Hồ Chí Minh, Đoàn Thanh niên giữ vai trò, trách nhiệm gì?", options: ["A. Là cơ quan quản lý tài chính kinh tế độc quyền của Đội.", "B. Là người phụ trách, chăm sóc, giáo dục và bảo vệ thiếu niên nhi đồng.", "C. Cung cấp trang thiết bị vũ khí quân sự cho học sinh tiểu học.", "D. Phối hợp tuyển chọn gọi đội viên nhập ngũ nghĩa vụ quân sự."], answer: 1 },
@@ -241,7 +244,7 @@
         { q: "Chủ trương “1+1” trong công tác thu hút tập hợp thanh niên của tổ chức Đoàn hiện nay được hiểu cụ thể là gì?", options: ["A. Mỗi chi đoàn hằng năm phải kết nạp thêm 01 đảng viên mới.", "B. Mỗi đoàn viên giới thiệu được ít nhất 01 thanh niên tham gia Đoàn, Hội.", "C. Cứ 01 cán bộ đoàn chuyên trách phải quản lý sát sao 01 đoàn viên yếu thế.", "D. Mỗi năm tổ chức Đoàn phải sáp nhập thêm 01 hội nhóm tự phát địa phương."], answer: 1 },
         { q: "Trong chương trình \"Rèn luyện đoàn viên\", nội dung đoàn viên rèn luyện để đấu tranh chống lại âm mưu phá hoại tư tưởng của các thế lực thù địch thuộc về lĩnh vực rèn luyện nào?", options: ["A. Rèn luyện về lý tưởng cách mạng, nhận thức chính trị.", "B. Rèn luyện về chuyên môn nghiệp vụ kỹ thuật chuyên ngành.", "C. Rèn luyện về sức khỏe thể chất và tầm vóc con người.", "D. Rèn luyện ý thức đóng đoàn phí hằng tháng của tập thể."], answer: 0 },
         { q: "Tiêu chí rèn luyện chuyên môn nghiệp vụ cụ thể bắt buộc đặt ra đối với đối tượng \"Đoàn viên lực lượng vũ trang\" là gì?", options: ["A. Đi đầu chuẩn hóa văn bản cải cách hành chính văn phòng ủy ban dân sự.", "B. Tích cực rèn luyện kỹ thuật, chiến thuật, sẵn sàng chiến đấu; xây dựng lực lượng vũ trang chính quy, tinh nhuệ, từng bước hiện đại.", "C. Xây dựng mô hình phát triển kinh tế trang trại chăn nuôi gắn với địa bàn dân cư.", "D. Phấn đấu đạt danh hiệu Sinh viên 5 tốt và tích cực trung thực trong thi cử học thuật."], answer: 1 },
-        { q: "Yêu cầu đầu tiên và quan trọng nhất để một đoàn viên xây dựng động cơ vào Đảng đúng đắn là gì?", options: ["A. Để tìm kiếm cơ hội thăng tiến địa vị cán bộ và lợi ích vật chất cá nhân.", "B. Hiểu sâu sắc bản chất, mục đích của Đảng, phấn đấu đứng trong tổ chức of những người cùng chung chí hướng đấu tranh xây dựng xã hội mới tốt đẹp.", "C. Để đủ thủ tục hoàn thiện hồ sơ đi lao động xuất khẩu ở nước ngoài.", "D. Để được miễn giảm các nghĩa vụ hành chính lao động công ích tại cơ sở."], answer: 1 },
+        { q: "Yêu cầu đầu tiên và quan trọng nhất để một đoàn viên xây dựng động cơ vào Đảng đúng đắn là gì?", options: ["A. Để tìm kiếm cơ hội thăng tiến địa vị cán bộ và lợi ích vật chất cá nhân.", "B. Hiểu sâu sắc bản chất, mục đích của Đảng, phấn đấu đứng trong tổ chức của những người cùng chung chí hướng đấu tranh xây dựng xã hội mới tốt đẹp.", "C. Để đủ thủ tục hoàn thiện hồ sơ đi lao động xuất khẩu ở nước ngoài.", "D. Để được miễn giảm các nghĩa vụ hành chính lao động công ích tại cơ sở."], answer: 1 },
         { q: "Ba yếu tố cốt lõi của kỹ thuật số trong Cách mạng công nghiệp 4.0 đang đặt ra thách thức rất lớn đối với trình độ, năng lực đáp ứng của thanh niên hiện nay bao gồm những yếu tố nào?", options: ["A. Trí tuệ nhân tạo (AI), vạn vật kết nối (IoT) và dữ liệu lớn (Big Data).", "B. Máy hơi nước, động cơ đốt trong và năng lượng điện hạt nhân.", "C. Điện thoại di động thế hệ cũ, kỹ thuật in ấn và mạng viễn thông analog.", "D. Công nghệ thi công cơ giới, thuốc nổ chuyên ngành và bản đồ địa hình bằng giấy."], answer: 0 ]
     ];
 
@@ -308,7 +311,7 @@
             
             if(userAnswers[currentIdx] === index) {
                 btn.style.background = "#d35400";
-                btn.style.borderColor = "var(--accent-gold)";
+                btn.style.borderColor = "#f1c40f"; // Đã sửa hoàn toàn lỗi cú pháp chuỗi tại đây
             }
             
             btn.onclick = () => {
